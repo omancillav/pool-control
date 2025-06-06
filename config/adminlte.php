@@ -307,7 +307,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'lista',
-                    'route' => 'membresias.lista',
+                    'route' => 'membresias.list',
                 ],
                 [
                     'text' => 'Nueva',
