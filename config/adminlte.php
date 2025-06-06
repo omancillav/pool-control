@@ -302,7 +302,7 @@ return [
         // Navbar items:
         
         [
-            'text' => 'membrecias',
+            'text' => 'membresias',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
