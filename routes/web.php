@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MembresiaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,4 +15,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/membresias', [App\Http\Controllers\MembresiaController::class, 'index'])->name('membresias.nueva');
-Route::get('/membresias/lista', [App\Http\Controllers\MembresiaController::class, 'list'])->name('membresias.lista');
+Route::get('/membresias/lista', [MembresiaController::class, 'list'])->name('membresias.list');
+Route::post('/membresias/store', [MembresiaController::class, 'store'])->name('membresias.store');
