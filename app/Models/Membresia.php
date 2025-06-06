@@ -9,10 +9,10 @@ class Membresia extends Model
 {
     use HasFactory;
 
-    // Nombre de la tabla (opcional si sigue la convención)
+
     protected $table = 'membresias';
 
-    // Los campos que se pueden asignar de forma masiva
+
     protected $fillable = [
         'id_usuario',
         'clases_adquiridas',
@@ -20,9 +20,8 @@ class Membresia extends Model
         'clases_ocupadas',
     ];
 
-    // Relación con el modelo User
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
-    }
+    }   
 }

@@ -3,135 +3,133 @@
 @section('title', ' | Membresías')
 
 @section('content')
-<section class="content">
-    <div class="right_col" role="main">
-        <div class="col-md-12 col-sm-12">
-            <div class="x_panel">
-                <div class="x_title d-flex justify-content-between align-items-center">
-                    <h2>Membresías</h2>
-                    <form method="GET" action="{{ route('membresias.list') }}" class="form-inline">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Buscar..."
-                                value="{{ request('search') }}">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Buscar</button>
+    <section class="content">
+        <div class="right_col" role="main">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Membresías</h2>
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <div class="btn-group" role="group" aria-label="Acciones de Membresía">
+                                    <button class="btn btn-success mr-2" data-toggle='modal' data-target="#createMembresia">
+                                        <i class="fa fa-plus"></i> Registrar Membresía
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="x_content">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card-box table-responsive">
-                                <table id="membresias" class="table table-striped display responsive nowrap" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>ID Usuario</th>
-                                            <th>Clases Adquiridas</th>
-                                            <th>Clases Disponibles</th>
-                                            <th>Clases Ocupadas</th>
-                                            <th>Creado el</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($membresias as $membresia)
-                                            <tr>
-                                                <td>{{ $membresia->id }}</td>
-                                                <td>{{ $membresia->id_usuario }}</td>
-                                                <td>{{ $membresia->clases_adquiridas }}</td>
-                                                <td>{{ $membresia->clases_disponibles }}</td>
-                                                <td>{{ $membresia->clases_ocupadas }}</td>
-                                                <td>{{ $membresia->created_at->format('d/m/Y') }}</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Opciones">
-                                                        <!-- Aquí puedes agregar botones de acción si quieres -->
-                                                        <button type="button" class="btn btn-info" title="Ver">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning" title="Editar">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger" title="Eliminar">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="7" class="text-center">No se encontraron resultados.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                        <div class="clearfix"></div>
+                    </div>
 
-                                <div class="d-flex justify-content-center mt-3">
-                                    {!! $membresias->links('pagination::bootstrap-4') !!}
+                    <div class="col-lg-4">
+                        <form method="GET" action="{{ route('membresias.list') }}" class="my-3">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Buscar..." value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
                                 </div>
+                            </div>
+                        </form>
+                    </div>
 
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <table id="membresias" class="table table-striped display responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>ID Usuario</th>
+                                                <th>Clases Adquiridas</th>
+                                                <th>Clases Disponibles</th>
+                                                <th>Clases Ocupadas</th>
+                                                <th>Creado el</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($membresias as $membresia)
+                                                <tr>
+                                                    <td>{{ $membresia->id }}</td>
+                                                    <td>{{ $membresia->id_usuario }}</td>
+                                                    <td>{{ $membresia->clases_adquiridas }}</td>
+                                                    <td>{{ $membresia->clases_disponibles }}</td>
+                                                    <td>{{ $membresia->clases_ocupadas }}</td>
+                                                    <td>{{ $membresia->created_at->format('d/m/Y') }}</td>
+                                                    <td>
+                                                        <div class="btn-group" role="group" aria-label="Opciones">
+                                                            <button type="button" class="btn btn-info mr-2" title="Ver" data-toggle="modal" data-target="#view{{ $membresia->id }}">
+                                                                <i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-warning mr-2" title="Editar" data-toggle="modal" data-target="#edit{{ $membresia->id }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger mr-2" title="Eliminar" data-toggle="modal" data-target="#delete{{ $membresia->id }}">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    {{--@include('membresias.edit')
+                                                    @include('membresias.delete')
+                                                    @include('membresias.show')--}}
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7" class="text-center">No se encontraron resultados.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+
+                                    @include('membresias.create')
+
+                                    <div class="d-flex justify-content-center mt-3">
+                                        {!! $membresias->links('pagination::bootstrap-4') !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function() {
-        $('#membresias').DataTable({
-            responsive: true,
-            paging: false,
-            info: false,
-            searching: false,
-            order: [[0, 'desc']],  // Ordenar por ID descendente
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: 'Reporte de Membresías'
-                },
-                {
-                    extend: 'csvHtml5',
-                    title: 'Reporte de Membresías'
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: 'Reporte de Membresías'
-                },
-                {
-                    extend: 'print',
-                    title: 'Reporte de Membresías'
-                }
-            ]
+    <script>
+        $(document).ready(function () {
+            $('#membresias').DataTable({
+                responsive: true,
+                paging: false,
+                info: false,
+                searching: false,
+                order: [[0, 'desc']],
+                dom: 'Bfrtip',
+
+            });
+
+            var successMessage = "{{ session('success') }}";
+            var errorMessage = "{{ session('error') }}";
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Éxito',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+
+            if (errorMessage) {
+                Swal.fire({
+                    title: 'Error',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
         });
-
-        var successMessage = "{{ session('success') }}";
-        var errorMessage = "{{ session('error') }}";
-
-        if (successMessage) {
-            Swal.fire({
-                title: 'Éxito',
-                text: successMessage,
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        if (errorMessage) {
-            Swal.fire({
-                title: 'Error',
-                text: errorMessage,
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    });
-</script>
+    </script>
 @endsection
