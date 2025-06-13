@@ -20,12 +20,8 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
-                            <div class="card">
-                                <div class="card-header py-2 bg-secondary">
-                                    <h3 class="card-title">Datos de la Membresía</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
+                            <div class="card-body">
+                                <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="id_usuario">Usuario(*)</label>
@@ -66,7 +62,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
 
                         <div class="modal-footer">
