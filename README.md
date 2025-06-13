@@ -27,7 +27,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/MancillaO/pool_control.git
+git clone https://github.com/MancillaO/pool-control.git
 cd pool_control
 ```
 
