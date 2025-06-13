@@ -35,7 +35,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Nombre de Usuario</th>
+                                                <th>Cliente</th>
                                                 <th>Clases Adquiridas</th>
                                                 <th>Clases Disponibles</th>
                                                 <th>Clases Ocupadas</th>
