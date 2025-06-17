@@ -27,7 +27,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/MancillaO/pool-control.git
+git clone https://github.com/omancillav/pool-control.git
 cd pool_control
 ```
 
@@ -117,14 +117,6 @@ Se crea un usuario administrador con las siguientes credenciales:
 
 > 📝 **Nota para Windows:** Asegúrate de que PHP esté agregado al PATH del sistema o abre la terminal desde la carpeta donde está instalado PHP.
 
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor, lee nuestra guía de contribución para más detalles.
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más información.
-
 ## 🖥️ Configuración Adicional para Windows
 
 ### Configurar el PATH de PHP
@@ -134,16 +126,6 @@ Para poder usar los comandos de PHP desde cualquier ubicación:
 2. Haz clic en "Variables de entorno"
 3. En "Variables del sistema", selecciona "Path" y haz clic en "Editar"
 4. Agrega la ruta a tu directorio PHP (ej: `C:\php`)
-
-### Solución de Problemas Comunes
-
-- **Error de permisos**: Ejecuta la terminal como administrador
-- **Puerto en uso**: Usa `netstat -ano | findstr :8000` para encontrar el proceso usando el puerto
-- **Problemas con Composer**: Asegúrate de tener la última versión de Composer instalada
-
-## 📧 Soporte
-
-Si tienes alguna pregunta o encuentras algún problema, por favor [abre un issue](https://github.com/MancillaO/pool_control/issues) en el repositorio.
 
 ---
 
