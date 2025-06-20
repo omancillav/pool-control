@@ -302,7 +302,7 @@ return [
         // Navbar items:
         
         [
-            'text' => 'Membresias',
+            'text' => 'Membresías',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
@@ -312,6 +312,21 @@ return [
                 [
                     'text' => 'Nueva',
                     'route' => 'membresias.nueva',
+                    
+                ],
+            ],
+        ],
+        [
+            'text' => 'Usuarios',
+            'icon' => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Lista',
+                    'route' => 'usuarios.list',
+                ],
+                [
+                    'text' => 'Nueva',
+                    'route' => 'usuarios.nueva',
                     
                 ],
             ],
