@@ -30,7 +30,11 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="rol">Rol(*)</label>
-                            <input type="text" class="form-control" id="rol" name="rol" required>
+                            <select class="form-control" id="rol" name="rol" required>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Cliente">Cliente</option>
+                                <option value="Profesor">Profesor</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
