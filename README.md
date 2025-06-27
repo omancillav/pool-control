@@ -71,9 +71,7 @@ cd pool_control
 
 ### 4. Configuración de la Base de Datos
 
-1. Crea una base de datos PostgreSQL vacía usando pgAdmin o la herramienta de tu preferencia.
-
-2. Ejecuta las migraciones y seeders (asegúrate de que el servicio de PostgreSQL esté en ejecución):
+1. Ejecuta las migraciones y seeders (asegúrate de que el servicio de PostgreSQL esté en ejecución):
    ```powershell
    php artisan migrate:fresh --seed
    ```
