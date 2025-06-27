@@ -67,7 +67,7 @@ cd pool_control
    ```powershell
    php artisan adminlte:install
    ```
-   > **Nota:** Si aparece el mensaje `AdminLTE asset files were already published. Want to replace? (yes/no) [no]:`, escribe **no** y presiona Enter para evitar que se sobrescriban los archivos.   ```
+   > **Nota:** Si aparece el mensaje `AdminLTE asset files were already published. Want to replace? (yes/no) [no]:`, escribe **no** y presiona Enter para evitar que se sobrescriban los archivos.
 
 ### 4. Configuración de la Base de Datos
 
