@@ -31,10 +31,9 @@
                         <div class="form-group">
                             <label for="rol">Rol(*)</label>
                             <select class="form-control" id="rol" name="rol" required>
-                                <option value="">Seleccione un rol</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="empleado">Empleado</option>
-                                <option value="cliente">Cliente</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Cliente">Cliente</option>
+                                <option value="Profesor">Profesor</option>
                             </select>
                         </div>
                     </div>
