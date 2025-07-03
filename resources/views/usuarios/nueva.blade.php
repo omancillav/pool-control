@@ -30,7 +30,12 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="rol">Rol(*)</label>
-                            <input type="text" class="form-control" id="rol" name="rol" required>
+                            <select class="form-control" id="rol" name="rol" required>
+                                <option value="">Seleccione un rol</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="empleado">Empleado</option>
+                                <option value="cliente">Cliente</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -42,7 +47,8 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="password_confirmation">Confirmar Contraseña(*)</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" required>
                         </div>
                     </div>
                 </div>
