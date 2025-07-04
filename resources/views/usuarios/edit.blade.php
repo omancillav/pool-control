@@ -1,5 +1,5 @@
-<div class="modal fade" id="editUsuario{{ $usuario->id }}" tabindex="-1" role="dialog" aria-labelledby="editUsuarioModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="editUsuario{{ $usuario->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="editUsuarioModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="card-warning">
@@ -24,19 +24,27 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="name">Nombre(*)</label>
-                                        <input type="text" name="name" class="form-control" value="{{ $usuario->name }}" required>
+                                        <input type="text" name="name" class="form-control" value="{{ $usuario->name }}"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="email">Email(*)</label>
-                                        <input type="email" name="email" class="form-control" value="{{ $usuario->email }}" required>
+                                        <input type="email" name="email" class="form-control"
+                                            value="{{ $usuario->email }}" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="rol">Rol(*)</label>
-                                        <input type="text" name="rol" class="form-control" value="{{ $usuario->rol }}" required>
+                                        <select name="rol" class="form-control" required>
+                                            <option value="">Seleccione un rol</option>
+                                            <option value="administrador" {{ (isset($usuario) && $usuario->rol == 'administrador') ? 'selected' : '' }}>Administrador
+                                            </option>
+                                            <option value="empleado" {{ (isset($usuario) && $usuario->rol == 'empleado') ? 'selected' : '' }}>Empleado</option>
+                                            <option value="cliente" {{ (isset($usuario) && $usuario->rol == 'cliente') ? 'selected' : '' }}>Cliente</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

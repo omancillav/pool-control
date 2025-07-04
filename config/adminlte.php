@@ -303,7 +303,7 @@ return [
         
         [
             'text' => 'Membresías',
-            'icon' => 'fas fa-fw fa-share',
+            'icon' => 'fas fa-fw fa-clipboard',
             'submenu' => [
                 [
                     'text' => 'Lista',
@@ -318,7 +318,7 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'icon' => 'fas fa-fw fa-share',
+            'icon' => 'fas fa-fw fa-users',
             'submenu' => [
                 [
                     'text' => 'Lista',
@@ -327,6 +327,21 @@ return [
                 [
                     'text' => 'Nueva',
                     'route' => 'usuarios.nueva',
+                    
+                ],
+            ],
+        ],
+        [
+            'text' => 'Classes',
+            'icon' => 'fas fa-fw fa-home',
+            'submenu' => [
+                [
+                    'text' => 'Lista',
+                    'route' => 'clases.list',
+                ],
+                [
+                    'text' => 'Nueva',
+                    'route' => 'clases.nueva',
                     
                 ],
             ],
@@ -370,7 +385,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -415,12 +430,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

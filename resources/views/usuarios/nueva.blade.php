@@ -46,7 +46,8 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="password_confirmation">Confirmar Contraseña(*)</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" required>
                         </div>
                     </div>
                 </div>
