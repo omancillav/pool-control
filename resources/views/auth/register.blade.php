@@ -203,20 +203,32 @@
                     <i class="fa-solid fa-user"></i>
                     <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required>
                 </div>
+                @error('name')
+                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                @enderror
                 <div class="input-group">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="email" name="email" placeholder="Correo electrónico" value="{{ old('email') }}" required>
                 </div>
+                @error('email')
+                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                @enderror
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" name="password" placeholder="Contraseña" required id="password">
                     <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
                 </div>
+                @error('password')
+                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                @enderror
                  <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required id="password_confirmation">
                     <i class="fa-solid fa-eye toggle-password" id="togglePasswordConfirmation"></i>
                 </div>
+                @error('password_confirmation')
+                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                @enderror
                 <button type="submit">Registrarse</button>
             </form>
         </div>

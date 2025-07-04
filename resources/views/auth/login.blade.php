@@ -322,7 +322,7 @@
                 <span>Use su correo y contraseña</span>
                 <div class="input-group">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="text" name="username" placeholder="Correo electrónico" value="{{ old('username') }}" required>
+                    <input type="text" name="email" placeholder="Correo electrónico" value="{{ old('email') }}" required>
                 </div>
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
