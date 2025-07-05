@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembresiaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\FacebookAuthController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -33,4 +35,12 @@ Route::get('/clases/lista', [ClaseController::class, 'list'])->name('clases.list
 Route::post('/clases/store', [ClaseController::class, 'store'])->name('clases.store');
 Route::put('/clases/{clase}', [ClaseController::class, 'update'])->name('clases.update');
 Route::delete('/clases/{id}', [ClaseController::class, 'destroy'])->name('clases.destroy');
-Route::get('/clases/{clase}/edit', [ClaseController::class, 'edit'])->name('clases.edit');
+
+// Manda a llamar al metodo redirect en los controlador
+Route::get('auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
+// Mandan allamar al metodo callback para procesar la respuesta
+Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+
+// Rutas de autenticación con Facebook
+Route::get('auth/facebook/redirect', [FacebookAuthController::class, 'redirect'])->name('auth.facebook.redirect');
+Route::get('auth/facebook/callback', [FacebookAuthController::class, 'callback'])->name('auth.facebook.callback');
