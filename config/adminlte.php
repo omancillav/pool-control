@@ -308,11 +308,12 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'membresias.list',
+                    'can' => ['admin', 'cliente']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'membresias.nueva',
-                    
+                    'can' => 'admin'
                 ],
             ],
         ],
@@ -323,11 +324,12 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'usuarios.list',
+                    'can' => ['admin', 'profesor']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'usuarios.nueva',
-                    
+                    'can' => ['admin', 'profesor']
                 ],
             ],
         ],
@@ -338,11 +340,12 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'clases.list',
+                    'can' => ['admin', 'cliente', 'profesor']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'clases.nueva',
-                    
+                    'can' => ['admin', 'profesor']
                 ],
             ],
         ],
