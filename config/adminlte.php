@@ -332,7 +332,7 @@ return [
             ],
         ],
         [
-            'text' => 'Classes',
+            'text' => 'Clases',
             'icon' => 'fas fa-fw fa-home',
             'submenu' => [
                 [

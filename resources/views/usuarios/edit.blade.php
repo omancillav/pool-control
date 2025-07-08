@@ -40,10 +40,10 @@
                                         <label for="rol">Rol(*)</label>
                                         <select name="rol" class="form-control" required>
                                             <option value="">Seleccione un rol</option>
-                                            <option value="administrador" {{ (isset($usuario) && $usuario->rol == 'administrador') ? 'selected' : '' }}>Administrador
+                                            <option value="Administrador" {{ (isset($usuario) && $usuario->rol == 'administrador') ? 'selected' : '' }}>Administrador
                                             </option>
-                                            <option value="empleado" {{ (isset($usuario) && $usuario->rol == 'empleado') ? 'selected' : '' }}>Empleado</option>
-                                            <option value="cliente" {{ (isset($usuario) && $usuario->rol == 'cliente') ? 'selected' : '' }}>Cliente</option>
+                                            <option value="Profesor" {{ (isset($usuario) && $usuario->rol == 'profesor') ? 'selected' : '' }}>Profesor</option>
+                                            <option value="Cliente" {{ (isset($usuario) && $usuario->rol == 'cliente') ? 'selected' : '' }}>Cliente</option>
                                         </select>
                                     </div>
                                 </div>
