@@ -13,7 +13,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
- 
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Rutas de Membresías
@@ -67,6 +67,11 @@ Route::put('/clases/{clase}', [ClaseController::class, 'update'])
 Route::delete('/clases/{id}', [ClaseController::class, 'destroy'])
     ->name('clases.destroy')
     ->middleware(['auth', 'rol:Administrador,Profesor']);
+
+// Ruta para el Aviso de Privacidad
+Route::get('/aviso-de-privacidad', function () {
+    return view('privacy.notice');
+})->name('privacy.notice');
 
 // Manda a llamar al metodo redirect en los controlador
 Route::get('auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');

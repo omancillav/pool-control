@@ -229,6 +229,7 @@
                 @error('password_confirmation')
                     <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
+                <p style="font-size: 12px; margin: 10px 0;">Al registrarte, aceptas nuestro <a href="{{ route('privacy.notice') }}" target="_blank" style="font-weight: bold; color: #3AB397; margin: 0;">Aviso de Privacidad</a>.</p>
                 <button type="submit">Registrarse</button>
             </form>
         </div>
