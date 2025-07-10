@@ -38,7 +38,7 @@ cd pool_control
    Copy-Item .env.example .env
    ```
 
-2. Crea una base de datos en PostgreSQL para el proyecto.
+2. Crea una base de datos en PostgreSQL con el nombre `pool_control` para el proyecto.
 
 3. Abre el archivo `.env` y configura tus variables de entorno. Asegúrate de que `DB_DATABASE` coincida con el nombre de la base de datos que creaste:
    ```env
@@ -46,8 +46,8 @@ cd pool_control
    DB_CONNECTION=pgsql
    DB_HOST=127.0.0.1
    DB_PORT=5432
-   DB_DATABASE=nombre_de_tu_base_de_datos
-   DB_USERNAME=tu_usuario_de_postgres
+   DB_DATABASE=pool_control
+   DB_USERNAME=postgres
    DB_PASSWORD=tu_contraseña_de_postgres
    ```
 
