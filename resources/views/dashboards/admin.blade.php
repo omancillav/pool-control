@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <a href="{{ route('membresias.index') }}" class="text-primary small font-weight-bold">
+                    <a href="{{ route('membresias.list') }}" class="text-primary small font-weight-bold">
                         Ver membresías <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <a href="{{ route('clases.index') }}" class="text-primary small font-weight-bold">
+                    <a href="{{ route('clases.list') }}" class="text-primary small font-weight-bold">
                         Ver clases <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
@@ -72,7 +72,7 @@
                 <h5 class="card-title mb-4">Acciones Rápidas</h5>
                 <div class="row">
                     <div class="col-6 col-md-3 mb-4">
-                        <a href="{{ route('usuarios.create') }}" class="text-decoration-none">
+                        <a href="{{ route('usuarios.nueva') }}" class="text-decoration-none">
                             <div class="border rounded p-4 text-center h-100 hover-shadow">
                                 <div class="bg-light p-3 rounded-circle d-inline-flex mb-3">
                                     <i class="fas fa-user-plus text-primary"></i>
@@ -82,7 +82,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3 mb-4">
-                        <a href="{{ route('membresias.create') }}" class="text-decoration-none">
+                        <a href="{{ route('membresias.nueva') }}" class="text-decoration-none">
                             <div class="border rounded p-4 text-center h-100 hover-shadow">
                                 <div class="bg-light p-3 rounded-circle d-inline-flex mb-3">
                                     <i class="fas fa-id-card text-primary"></i>
@@ -92,7 +92,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3 mb-4">
-                        <a href="{{ route('clases.create') }}" class="text-decoration-none">
+                        <a href="{{ route('clases.nueva') }}" class="text-decoration-none">
                             <div class="border rounded p-4 text-center h-100 hover-shadow">
                                 <div class="bg-light p-3 rounded-circle d-inline-flex mb-3">
                                     <i class="fas fa-calendar-plus text-primary"></i>
@@ -102,7 +102,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3 mb-4">
-                        <a href="{{ route('reportes.index') }}" class="text-decoration-none">
+                        <a href="#" class="text-decoration-none">
                             <div class="border rounded p-4 text-center h-100 hover-shadow">
                                 <div class="bg-light p-3 rounded-circle d-inline-flex mb-3">
                                     <i class="fas fa-chart-bar text-primary"></i>

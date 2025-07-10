@@ -71,7 +71,7 @@
                             <i class="fas fa-calendar-alt fa-4x text-muted mb-3"></i>
                             <h5>No tienes clases programadas</h5>
                             <p class="text-muted mb-4">Cuando tengas clases asignadas, aparecerán aquí</p>
-                            <a href="{{ route('clases.list') }}" class="btn btn-primary">
+                            <a href="{{ route('clases.nueva') }}" class="btn btn-primary">
                                 <i class="fas fa-plus mr-2"></i> Crear Nueva Clase
                             </a>
                         </div>
