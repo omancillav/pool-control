@@ -212,7 +212,7 @@
     <span class="bienvenida-icon">
         <svg width="28" height="28" fill="#B0BEC5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M12 14c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4z"/></svg>
     </span>
-    <span class="bienvenida-txt">HELLO {{ Auth::user()->name ?? 'Usuario' }}!</span>
+    <span class="bienvenida-txt">Bienvenido {{ Auth::user()->name ?? 'Usuario' }}!</span>
 </div>
 
 <div class="main-content container-fluid">
