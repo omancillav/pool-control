@@ -49,4 +49,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the membership associated with the user.
+     */
+    public function membresia()
+    {
+        return $this->hasOne(Membresia::class, 'id_usuario');
+    }
+
+    /**
+     * The classes that a user is enrolled in (for clients).
+     */
+    public function clases()
+    {
+        return $this->belongsToMany(Clase::class, 'asistencias', 'id_usuario', 'id_clase');
+    }
+
+    /**
+     * The classes that a user teaches (for professors).
+     */
+    public function clasesImpartidas()
+    {
+        return $this->hasMany(Clase::class, 'id_profesor');
+    }
 }

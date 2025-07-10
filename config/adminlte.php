@@ -302,22 +302,6 @@ return [
         // Navbar items:
         
         [
-            'text' => 'Membresías',
-            'icon' => 'fas fa-fw fa-clipboard',
-            'submenu' => [
-                [
-                    'text' => 'Lista',
-                    'route' => 'membresias.list',
-                    'can' => ['admin', 'cliente']
-                ],
-                [
-                    'text' => 'Nueva',
-                    'route' => 'membresias.nueva',
-                    'can' => 'admin'
-                ],
-            ],
-        ],
-        [
             'text' => 'Usuarios',
             'icon' => 'fas fa-fw fa-users',
             'submenu' => [
@@ -330,6 +314,22 @@ return [
                     'text' => 'Nueva',
                     'route' => 'usuarios.nueva',
                     'can' => ['admin', 'profesor']
+                ],
+            ],
+        ],
+        [
+            'text' => 'Membresías',
+            'icon' => 'fas fa-fw fa-clipboard',
+            'submenu' => [
+                [
+                    'text' => 'Lista',
+                    'route' => 'membresias.list',
+                    'can' => ['admin', 'cliente']
+                ],
+                [
+                    'text' => 'Nueva',
+                    'route' => 'membresias.nueva',
+                    'can' => 'admin'
                 ],
             ],
         ],
