@@ -22,4 +22,12 @@ class Clase extends Model
     {
         return $this->belongsTo(User::class, 'id_profesor');
     }
+
+    /**
+     * The users that are enrolled in this class (for clients).
+     */
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'asistencias', 'id_clase', 'id_usuario');
+    }
 }

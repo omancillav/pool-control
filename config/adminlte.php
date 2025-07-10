@@ -302,47 +302,50 @@ return [
         // Navbar items:
         
         [
-            'text' => 'Membresías',
-            'icon' => 'fas fa-fw fa-clipboard',
-            'submenu' => [
-                [
-                    'text' => 'Lista',
-                    'route' => 'membresias.list',
-                ],
-                [
-                    'text' => 'Nueva',
-                    'route' => 'membresias.nueva',
-                    
-                ],
-            ],
-        ],
-        [
             'text' => 'Usuarios',
             'icon' => 'fas fa-fw fa-users',
             'submenu' => [
                 [
                     'text' => 'Lista',
                     'route' => 'usuarios.list',
+                    'can' => ['admin', 'profesor']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'usuarios.nueva',
-                    
+                    'can' => ['admin', 'profesor']
                 ],
             ],
         ],
         [
-            'text' => 'Classes',
+            'text' => 'Membresías',
+            'icon' => 'fas fa-fw fa-clipboard',
+            'submenu' => [
+                [
+                    'text' => 'Lista',
+                    'route' => 'membresias.list',
+                    'can' => ['admin', 'cliente']
+                ],
+                [
+                    'text' => 'Nueva',
+                    'route' => 'membresias.nueva',
+                    'can' => 'admin'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Clases',
             'icon' => 'fas fa-fw fa-home',
             'submenu' => [
                 [
                     'text' => 'Lista',
                     'route' => 'clases.list',
+                    'can' => ['admin', 'cliente', 'profesor']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'clases.nueva',
-                    
+                    'can' => ['admin', 'profesor']
                 ],
             ],
         ],
