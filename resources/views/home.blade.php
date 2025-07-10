@@ -3,18 +3,27 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <div class="container-fluid">
+
+                @if(Auth::user()->rol == 'Administrador')
+            {{-- Admin Dashboard --}}
+            @include('dashboards.admin', compact('totalUsuarios', 'totalMembresias', 'totalClases'))
+        @elseif(Auth::user()->rol == 'Cliente')
+            {{-- Client Dashboard --}}
+            @include('dashboards.cliente', compact('membresia', 'clases'))
+        @elseif(Auth::user()->rol == 'Profesor')
+            {{-- Professor Dashboard --}}
+            @include('dashboards.profesor', compact('clasesImpartidas'))
+        @endif
+    </div>
 @stop
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop
