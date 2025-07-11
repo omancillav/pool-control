@@ -261,7 +261,6 @@
                     });
                 }
             }
-
             setupPasswordToggle('password', 'togglePassword');
             setupPasswordToggle('password_confirmation', 'togglePasswordConfirmation');
         });

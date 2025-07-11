@@ -44,6 +44,7 @@ class GoogleAuthController extends Controller
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'avatar' => $googleUser->avatar,
+                    'rol' => 'Cliente',
                     'password' => null, // La contraseña es nula ya que se autentican con Google
                 ]);
             }
