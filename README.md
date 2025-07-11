@@ -28,7 +28,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 
 ```bash
 git clone https://github.com/omancillav/pool-control.git
-cd pool_control
+cd pool-control
 ```
 
 ### 2. Configuración del Entorno
@@ -49,6 +49,15 @@ cd pool_control
    DB_DATABASE=pool_control
    DB_USERNAME=postgres
    DB_PASSWORD=tu_contraseña_de_postgres
+
+   # Configuración de Google Authentication
+   GOOGLE_CLIENT_ID=tu_client_id_google
+   GOOGLE_CLIENT_SECRET=tu_client_secret_google
+
+   # Configuración de Facebook Authentication
+   FACEBOOK_CLIENT_ID=tu_client_id_facebook
+   FACEBOOK_CLIENT_SECRET=tu_client_secret_facebook
+   FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
    ```
 
 ### 3. Instalar Dependencias
