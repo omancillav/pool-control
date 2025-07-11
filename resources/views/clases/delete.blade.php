@@ -5,7 +5,7 @@
         box-shadow: 0 2px 8px rgba(176,190,197,0.12);
         background: #fff;
     }
-    .modal-header {
+    .modal-header-delete {
         position: relative;
         background: linear-gradient(90deg, #F8D7DA 0%, #F5C6CB 100%); /* Gradiente rojo suave para eliminación */
         border-radius: 16px 16px 0 0;
@@ -60,7 +60,7 @@
     <div class="modal fade" id="delete{{ $clase->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $clase->id }}" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header-delete">
                     <h4 class="modal-title" id="deleteModalLabel{{ $clase->id }}">Eliminar Clase</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                         <span aria-hidden="true">×</span>
