@@ -28,7 +28,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 
 ```bash
 git clone https://github.com/omancillav/pool-control.git
-cd pool_control
+cd pool-control
 ```
 
 ### 2. Configuración del Entorno
