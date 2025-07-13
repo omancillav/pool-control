@@ -1,14 +1,10 @@
 @push('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Set minimum date to today for all date inputs
         document.querySelectorAll('input[type="date"]').forEach(input => {
             input.min = new Date().toISOString().split('T')[0];
         });
-
-        // Add event listeners to all class edit forms
         document.querySelectorAll('form[action*="clases/update"]').forEach(form => {
-            // Auto-calculate available places when total or occupied changes
             const lugaresInput = form.querySelector('input[name="lugares"]');
             const ocupadosInput = form.querySelector('input[name="lugares_ocupados"]');
             const disponiblesInput = form.querySelector('input[name="lugares_disponibles"]');
@@ -23,20 +19,12 @@
             if (lugaresInput && ocupadosInput && disponiblesInput) {
                 lugaresInput.addEventListener('input', calculateAvailablePlaces);
                 ocupadosInput.addEventListener('input', calculateAvailablePlaces);
-
-                // Initial calculation
                 calculateAvailablePlaces();
             }
-
-            // Form submission validation
             form.addEventListener('submit', function(event) {
                 let isValid = true;
-
-                // Reset error messages
                 form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
                 form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-
-                // Validate date is not in the past
                 const fechaInput = form.querySelector('input[name="fecha"]');
                 if (fechaInput) {
                     const selectedDate = new Date(fechaInput.value);
@@ -48,8 +36,6 @@
                         isValid = false;
                     }
                 }
-
-                // Validate that occupied places don't exceed total places
                 if (lugaresInput && ocupadosInput) {
                     const lugares = parseInt(lugaresInput.value) || 0;
                     const lugaresOcupados = parseInt(ocupadosInput.value) || 0;

@@ -100,17 +100,14 @@
             const password = document.getElementById('password');
             const passwordConfirmation = document.getElementById('password_confirmation');
             
-            // Reset error messages
             document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
             document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
             
-            // Validate name
             if (!name.value.trim()) {
                 showError(name, 'El nombre es obligatorio');
                 isValid = false;
             }
             
-            // Validate email
             if (!email.value.trim()) {
                 showError(email, 'El correo electrónico es obligatorio');
                 isValid = false;
@@ -119,7 +116,6 @@
                 isValid = false;
             }
             
-            // Validate password
             if (!password.value) {
                 showError(password, 'La contraseña es obligatoria');
                 isValid = false;
@@ -128,7 +124,6 @@
                 isValid = false;
             }
             
-            // Validate password confirmation
             if (!passwordConfirmation.value) {
                 showError(passwordConfirmation, 'Por favor confirme la contraseña');
                 isValid = false;

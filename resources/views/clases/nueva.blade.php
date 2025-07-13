@@ -83,29 +83,19 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
         const fechaInput = document.getElementById('fecha');
-
-        // Set minimum date to today
         const today = new Date().toISOString().split('T')[0];
         fechaInput.min = today;
-
         form.addEventListener('submit', function(event) {
             let isValid = true;
-
-            // Reset error messages
             form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
             form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-
-            // Validate date is not in the past
             const selectedDate = new Date(fechaInput.value);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-
             if (selectedDate < today) {
                 showError(fechaInput, 'La fecha no puede ser anterior al día de hoy');
                 isValid = false;
             }
-
-            // Validate that occupied places don't exceed total places
             const lugares = parseInt(document.getElementById('lugares').value) || 0;
             const lugaresOcupados = parseInt(document.getElementById('lugares_ocupados').value) || 0;
             const lugaresDisponibles = parseInt(document.getElementById('lugares_disponibles').value) || 0;
@@ -124,8 +114,6 @@
                 event.preventDefault();
             }
         });
-
-        // Auto-calculate available places when total or occupied changes
         document.getElementById('lugares').addEventListener('input', calculateAvailablePlaces);
         document.getElementById('lugares_ocupados').addEventListener('input', calculateAvailablePlaces);
 

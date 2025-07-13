@@ -7,7 +7,7 @@
     }
     .modal-header-delete {
         position: relative;
-        background: linear-gradient(90deg, #F8D7DA 0%, #F5C6CB 100%); /* Gradiente rojo suave para eliminación */
+        background: linear-gradient(90deg, #F8D7DA 0%, #F5C6CB 100%);
         border-radius: 16px 16px 0 0;
         border-bottom: none;
         padding: 16px 24px;
@@ -30,7 +30,7 @@
         background: #fff;
         padding: 24px;
         text-align: center;
-        color: #721C24; /* Color rojo oscuro para el texto */
+        color: #721C24;
     }
     .modal-footer {
         border-top: none;
@@ -47,7 +47,7 @@
         padding: 8px 16px;
     }
     .btn-delete {
-        background: #DC3545; /* Rojo para eliminación */
+        background: #DC3545;
         border: 1px solid #DC3545;
         color: #fff;
         border-radius: 6px;

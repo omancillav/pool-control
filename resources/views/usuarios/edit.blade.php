@@ -11,17 +11,14 @@
                 const password = form.querySelector('input[name="password"]');
                 const passwordConfirmation = form.querySelector('input[name="password_confirmation"]');
                 
-                // Reset error messages
                 form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
                 form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
                 
-                // Validate name
                 if (!name.value.trim()) {
                     showError(name, 'El nombre es obligatorio');
                     isValid = false;
                 }
                 
-                // Validate email
                 if (!email.value.trim()) {
                     showError(email, 'El correo electrónico es obligatorio');
                     isValid = false;
@@ -30,14 +27,12 @@
                     isValid = false;
                 }
                 
-                // Validate password only if provided
                 if (password.value) {
                     if (password.value.length < 8) {
                         showError(password, 'La contraseña debe tener al menos 8 caracteres');
                         isValid = false;
                     }
                     
-                    // Validate password confirmation if password is provided
                     if (password.value !== passwordConfirmation.value) {
                         showError(passwordConfirmation, 'Las contraseñas no coinciden');
                         isValid = false;

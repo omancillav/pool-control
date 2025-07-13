@@ -89,11 +89,9 @@
             const clasesDisponibles = document.getElementById('clases_disponibles');
             const clasesOcupadas = document.getElementById('clases_ocupadas');
             
-            // Reset error messages
             form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
             form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
             
-            // Validate that available + occupied doesn't exceed acquired
             if (parseInt(clasesDisponibles.value) + parseInt(clasesOcupadas.value) > parseInt(clasesAdquiridas.value)) {
                 showError(clasesAdquiridas, 'La suma de clases disponibles y ocupadas no puede ser mayor a las clases adquiridas');
                 isValid = false;

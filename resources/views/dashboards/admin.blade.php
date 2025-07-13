@@ -1,10 +1,11 @@
 <style>
     body {
-        background: #E6F0FA;
+        background: #F5F7FA; 
+        font-family: Arial, sans-serif; 
     }
     .header-wave {
         position: relative;
-        background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
+        background: linear-gradient(90deg, #E6F0FA 0%, #A3C9F5 70%, #8A94B3 100%); 
         overflow: hidden;
         border-radius: 0 0 32px 32px;
         box-shadow: 0 2px 8px rgba(176,190,197,0.12);
@@ -14,11 +15,12 @@
         left: 0; right: 0; bottom: 0;
         width: 100%; height: 70px;
         z-index: 0;
+        fill: #A3C9F5; 
     }
     .wibesand-logo {
         font-weight: bold;
         font-size: 2rem;
-        color: #FFC107;
+        color: #1976D2; 
         letter-spacing: 2px;
         display: flex;
         align-items: center;
@@ -41,6 +43,7 @@
     }
     .encabezado-punto svg {
         margin-top: 0.2rem;
+        fill: #2196F3; 
     }
     .bienvenida-section {
         display: flex; align-items: center;
@@ -54,7 +57,7 @@
         z-index: 2;
     }
     .bienvenida-icon {
-        background: #ECEFF1;
+        background: #E0EAF5; 
         border-radius: 50%;
         width: 48px; height: 48px;
         display: flex; align-items: center; justify-content: center;
@@ -84,7 +87,7 @@
         min-height: 170px;
     }
     .card-home .icon {
-        background: #ECEFF1;
+        background: #E0EAF5; 
         border-radius: 50%;
         width: 42px; height: 42px;
         display: flex; align-items: center; justify-content: center;
@@ -95,7 +98,7 @@
     }
     .card-home .titulo {
         font-size: 1.1rem;
-        color: #90A4AE;
+        color: #90A4AE; /* Gris claro para títulos */
         font-weight: 600;
         margin-bottom: 4px;
     }
@@ -106,7 +109,7 @@
         margin-bottom: 6px;
     }
     .card-home .detalle-link {
-        color: #2196F3;
+        color: #2196F3; 
         font-weight: 600;
         font-size: 1rem;
         text-decoration: none;
@@ -132,7 +135,7 @@
     .acciones-title {
         font-size: 1.3rem;
         font-weight: 700;
-        color: #1976D2;
+        color: #1976D2; 
         margin-bottom: 18px;
         text-align: left;
     }
@@ -145,7 +148,7 @@
     .accion-btn {
         flex: 1;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        background: #42A5F5;
+        background: #42A5F5; 
         color: #fff;
         border: none;
         border-radius: 8px;
@@ -189,6 +192,13 @@
             padding: 18px 4px;
         }
     }
+    .hover-shadow {
+        transition: all 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 <div class="header-wave py-4 px-4 mb-0">
@@ -205,7 +215,7 @@
     <div class="encabezado-punto">
         <svg width="16" height="16"><circle cx="8" cy="8" r="8" fill="#2196F3"/></svg>
     </div>
-    <svg class="wave-svg" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C360,90 1080,-30 1440,30 L1440,70 L0,70 Z" fill="#B3D4FC"/></svg>
+    <svg class="wave-svg" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C360,90 1080,-30 1440,30 L1440,70 L0,70 Z" fill="#A3C9F5"/></svg>
 </div>
 
 <div class="bienvenida-section">
@@ -218,33 +228,33 @@
 <div class="main-content container-fluid">
     <div class="row text-center">
         <div class="col-12 col-md-4 mb-3">
-            <div class="card-home">
+            <div class="card-home hover-shadow">
                 <span class="icon"><svg fill="#B0BEC5" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05C15.99 13.33 18 14.42 18 16.5V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></span>
                 <div class="titulo">Usuarios</div>
                 <div class="numero">{{ $totalUsuarios ?? '5' }}</div>
-                <a href="{{ route('usuarios.list') }}" class="detalle-link">Ver detalles &rarr;</a>
+                <a href="{{ route('usuarios.list') }}" class="detalle-link">Ver detalles →</a>
                 <div class="mini-chart">
                     <svg width="100%" height="32"><polyline fill="none" stroke="#2196F3" stroke-width="3" points="5,27 20,20 40,25 60,18 80,14 95,20"/><polyline fill="none" stroke="#4CAF50" stroke-width="3" points="5,28 20,25 40,22 60,25 80,22 95,18"/></svg>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-            <div class="card-home">
+            <div class="card-home hover-shadow">
                 <span class="icon"><svg fill="#B0BEC5" viewBox="0 0 24 24"><path d="M20 6h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm-6 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-10V4h4v2h-4z"/></svg></span>
                 <div class="titulo">Membresías Activas</div>
                 <div class="numero">{{ $totalMembresias ?? '2' }}</div>
-                <a href="{{ route('membresias.list') }}" class="detalle-link">Ver membresías &rarr;</a>
+                <a href="{{ route('membresias.list') }}" class="detalle-link">Ver membresías →</a>
                 <div class="mini-chart">
                     <svg width="100%" height="32"><polyline fill="none" stroke="#2196F3" stroke-width="3" points="5,25 20,18 40,22 60,15 80,10 95,15"/><polyline fill="none" stroke="#4CAF50" stroke-width="3" points="5,28 20,25 40,25 60,28 80,25 95,20"/></svg>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 mb-3">
-            <div class="card-home">
+            <div class="card-home hover-shadow">
                 <span class="icon"><svg fill="#B0BEC5" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V8h14v13zm0-15H5V5h14v1z"/></svg></span>
                 <div class="titulo">Clases Programadas</div>
                 <div class="numero">{{ $totalClases ?? '3' }}</div>
-                <a href="{{ route('clases.list') }}" class="detalle-link">Ver clases &rarr;</a>
+                <a href="{{ route('clases.list') }}" class="detalle-link">Ver clases →</a>
                 <div class="mini-chart">
                     <svg width="100%" height="32"><polyline fill="none" stroke="#2196F3" stroke-width="3" points="5,28 20,24 40,18 60,24 80,20 95,12"/><polyline fill="none" stroke="#4CAF50" stroke-width="3" points="5,30 20,28 40,25 60,28 80,25 95,20"/></svg>
                 </div>
@@ -264,19 +274,12 @@
     <span class="search-icon"><svg fill="#2196F3" width="18" height="18" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span>
 </div>
 
-    
-
-    
-    
-    
-</div>
-
 <style>
-.hover-shadow {
-    transition: all 0.3s ease;
-}
-.hover-shadow:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-}
+    .hover-shadow {
+        transition: all 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
 </style>

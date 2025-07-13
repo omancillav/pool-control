@@ -5,26 +5,30 @@
 @section('css')
 <style>
     body {
-        background: #E6F0FA;
+        background: #F5F7FA; 
+        font-family: Arial, sans-serif; 
     }
     .header-wave {
         position: relative;
-        background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
+        background: linear-gradient(90deg, #E6F0FA 0%, #A3C9F5 70%, #8A94B3 100%); 
         overflow: hidden;
         border-radius: 0 0 32px 32px;
         box-shadow: 0 2px 8px rgba(176,190,197,0.12);
         padding: 16px 24px;
+        min-height: 120px; 
+        margin-bottom: 24px; 
     }
     .wave-svg {
         position: absolute;
         left: 0; right: 0; bottom: 0;
         width: 100%; height: 70px;
         z-index: 0;
+        fill: #A3C9F5; 
     }
     .wibesand-logo {
         font-weight: bold;
         font-size: 2rem;
-        color: #FFC107;
+        color: #1976D2; 
         letter-spacing: 2px;
         display: flex;
         align-items: center;
@@ -46,7 +50,7 @@
         border: 1px solid #E0E0E0;
     }
     .form-header {
-        background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
+        background: linear-gradient(90deg, #E6F0FA 0%, #A3C9F5 70%); 
         border-radius: 12px 12px 0 0;
         padding: 16px 24px;
         margin: -32px -16px 24px -16px;
@@ -74,7 +78,7 @@
         margin-bottom: 16px;
     }
     .icon-circle {
-        background: #F8F9FA;
+        background: #E0EAF5; 
         padding: 12px;
         border-radius: 50%;
         display: inline-flex;
@@ -82,15 +86,15 @@
         justify-content: center;
     }
     .text-muted {
-        color: #555 !important;
+        color: #90A4AE !important; 
     }
     .progress {
         height: 6px;
         border-radius: 3px;
-        background: #E0E0E0;
+        background: #E0EAF5; 
     }
     .progress-bar {
-        background: #1976D2;
+        background: #2196F3; 
     }
     .list-group-item {
         border: none;
@@ -116,12 +120,16 @@
         color: #fff;
     }
     .text-primary {
-        color: #1976D2 !important;
+        color: #2196F3 !important; /* Azul para texto primario */
     }
 </style>
 @endsection
 
 @section('content_header')
+    <!-- El header-wave se mantiene fuera de content_header -->
+@endsection
+
+@section('content')
     <div class="header-wave">
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <div class="wibesand-logo">
@@ -133,12 +141,9 @@
             <div></div>
         </div>
         <svg class="wave-svg" viewBox="0 0 1440 70" preserveAspectRatio="none">
-            <path d="M0,70 C360,30 1080,110 1440,70 L1440,70 L0,70 Z" fill="#fff"/>
+            <path d="M0,70 C360,30 1080,110 1440,70 L1440,70 L0,70 Z" fill="#A3C9F5"/>
         </svg>
     </div>
-@endsection
-
-@section('content')
     <div class="main-content">
         <div class="form-header">
             <h3 class="form-title">Bienvenido de vuelta</h3>
