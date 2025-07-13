@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('landing');
 });
 
 Auth::routes();
