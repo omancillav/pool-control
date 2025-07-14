@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 
-@section('content_header')
+@section('content')
 <div class="header-wave">
     <div style="display: flex; align-items: center; justify-content: space-between;">
         <div class="wibesand-logo">
@@ -18,12 +18,9 @@
         <div></div>
     </div>
     <svg class="wave-svg" viewBox="0 0 1440 70" preserveAspectRatio="none">
-        <path d="M0,70 C360,30 1080,110 1440,70 L1440,70 L0,70 Z" fill="#fff" />
+        <path d="M0,60 C360,70 1080,50 1440,60 L1440,70 L0,70 Z" fill="#f4f6f9" />
     </svg>
 </div>
-@endsection
-
-@section('content')
 <div class="main-content">
     <div class="content-header">
         <h3 class="page-title">Clases</h3>

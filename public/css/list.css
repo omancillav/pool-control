@@ -1,4 +1,9 @@
 /* General Body and Layout */
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   background: #E6F0FA;
 }
@@ -6,11 +11,11 @@ body {
 /* Header with Wave */
 .header-wave {
   position: relative;
+  width: 100%;
   background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
   overflow: hidden;
-  border-radius: 0 0 32px 32px;
-  box-shadow: 0 2px 8px rgba(176, 190, 197, 0.12);
-  padding: 16px 24px;
+  padding: 30px 24px;
+  margin-bottom: 20px;
 }
 
 .wave-svg {
@@ -32,11 +37,12 @@ body {
   align-items: center;
   z-index: 1;
   position: relative;
+  gap: 8px;
 }
 
 .wibesand-logo .logo-icon {
-  width: 36px;
-  height: 36px;
+  width: 45px;
+  aspect-ratio: 1;
   margin-right: 10px;
   background: #1976D2;
   border-radius: 50%;
@@ -51,8 +57,8 @@ body {
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(176, 190, 197, 0.12);
   padding: 32px 16px 24px 16px;
-  margin-bottom: 28px;
   border: 1px solid #E0E0E0;
+  overflow: hidden;
 }
 
 /* Unified Title Styles */
@@ -60,7 +66,7 @@ body {
   background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
   border-radius: 12px 12px 0 0;
   padding: 16px 24px;
-  margin: -32px -16px 24px -16px;
+  margin: -32px -25px 24px;
   box-shadow: 0 2px 4px rgba(176, 190, 197, 0.1);
 }
 
