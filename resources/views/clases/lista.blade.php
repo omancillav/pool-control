@@ -3,115 +3,7 @@
 @section('title', ' | Clases')
 
 @section('css')
-<style>
-    body {
-        background: #E6F0FA;
-    }
-    .header-wave {
-        position: relative;
-        background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
-        overflow: hidden;
-        border-radius: 0 0 32px 32px;
-        box-shadow: 0 2px 8px rgba(176,190,197,0.12);
-        padding: 16px 24px;
-    }
-    .wave-svg {
-        position: absolute;
-        left: 0; right: 0; bottom: 0;
-        width: 100%; height: 70px;
-        z-index: 0;
-    }
-    .wibesand-logo {
-        font-weight: bold;
-        font-size: 2rem;
-        color: #FFC107;
-        letter-spacing: 2px;
-        display: flex;
-        align-items: center;
-        z-index: 1;
-        position: relative;
-    }
-    .wibesand-logo .logo-icon {
-        width: 36px; height: 36px; margin-right: 10px;
-        background: #1976D2;
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-    }
-    .main-content {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 2px 8px rgba(176,190,197,0.12);
-        padding: 32px 16px 24px 16px;
-        margin-bottom: 28px;
-        border: 1px solid #E0E0E0;
-    }
-    .form-header {
-        background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
-        border-radius: 12px 12px 0 0;
-        padding: 16px 24px;
-        margin: -32px -16px 24px -16px;
-        box-shadow: 0 2px 4px rgba(176,190,197,0.1);
-    }
-    .form-title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #222;
-        margin: 0;
-    }
-    .form-control {
-        border-radius: 6px;
-        border: 1px solid #E0E0E0;
-        box-shadow: 0 2px 4px rgba(176,190,197,0.1);
-    }
-    .btn-search {
-        background: #1976D2;
-        border: 1px solid #1976D2;
-        color: #fff;
-        border-radius: 6px;
-        font-weight: bold;
-        padding: 8px 16px;
-    }
-    .btn-edit {
-        background: #1976D2;
-        border: 1px solid #1976D2;
-        color: #fff;
-        border-radius: 6px;
-        font-weight: bold;
-        padding: 8px 12px;
-    }
-    .btn-delete {
-        background: #DC3545;
-        border: 1px solid #DC3545;
-        color: #fff;
-        border-radius: 6px;
-        font-weight: bold;
-        padding: 8px 12px;
-    }
-    .table {
-        border-radius: 6px;
-        border: 1px solid #E0E0E0;
-        box-shadow: 0 2px 4px rgba(176,190,197,0.1);
-        background: #fff;
-    }
-    .table thead th {
-        font-weight: bold;
-        color: #222;
-        background: #F8F9FA;
-    }
-    .table tbody tr {
-        border-bottom: 1px solid #E0E0E0;
-    }
-    .pagination .page-link {
-        border-radius: 6px;
-        border: 1px solid #E0E0E0;
-        color: #1976D2;
-    }
-    .pagination .page-item.active .page-link {
-        background: #1976D2;
-        border-color: #1976D2;
-        color: #fff;
-    }
-</style>
+    <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 
 @section('content_header')
@@ -133,8 +25,8 @@
 
 @section('content')
     <div class="main-content">
-        <div class="form-header">
-            <h3 class="form-title">Clases</h3>
+                <div class="content-header">
+            <h3 class="page-title">Clases</h3>
         </div>
         <div class="row">
             <div class="col-lg-4">
@@ -153,7 +45,7 @@
             <table id="clases" class="table table-striped display responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <!-- <th>ID</th> -->
                         <th>Fecha</th>
                         <th>Profesor</th>
                         <th>Tipo</th>
@@ -167,7 +59,7 @@
                 <tbody>
                     @forelse ($clases as $clase)
                         <tr>
-                            <td>{{ $clase->id }}</td>
+                            <!-- <td>{{ $clase->id }}</td> -->
                             <td>{{ $clase->fecha->format('d/m/Y') }}</td>
                             <td>{{ $clase->profesor->name ?? 'Sin asignar' }} {{ $clase->profesor->last_name ?? '' }}</td>
                             <td>{{ $clase->tipo }}</td>
