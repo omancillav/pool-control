@@ -85,7 +85,6 @@
     <h2 class="section-title">Comienza Hoy</h2>
     <div class="contact-content">
       <p>¿Listo para revolucionar tu alberca? Únete a cientos de instructores que ya confían en Pool Control para gestionar sus negocios.</p>
-      <p>Contáctanos en <a href="mailto:info@poolcontrol.com">info@poolcontrol.com</a> o comienza tu prueba gratuita.</p>
     </div>
     <div style="margin-top: 2rem;">
       <a href="/register" class="btn primary">Crear Cuenta Gratis</a>
