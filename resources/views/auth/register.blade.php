@@ -62,7 +62,9 @@
                     <a href="/" class="home-btn">
                         <i class="fas fa-home"></i> Inicio
                     </a>
-                    <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
+                    <a href="{{ route('login') }}" class="hidden">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
                 </div>
             </div>
         </div>

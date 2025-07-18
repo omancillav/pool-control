@@ -57,7 +57,9 @@
                     <a href="/" class="home-btn">
                         <i class="fas fa-home"></i> Inicio
                     </a>
-                    <a href="{{ route('register') }}" class="hidden">Regístrate</a>
+                    <a href="{{ route('register') }}" class="hidden">
+                        <i class="fas fa-user-plus"></i> Regístrate
+                    </a>
                 </div>
             </div>
         </div>
