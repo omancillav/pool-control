@@ -28,7 +28,11 @@
                 </div>
                 <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
                 <button type="submit">Iniciar Sesión</button>
-                <div class="divider">o inicie sesión con</div>
+                <section class="divider-section">
+                    <div class="divider"></div>
+                    <p class="divider-text">o inicie sesión con</p>
+                    <div class="divider"></div>
+                </section>
                 {{-- Boton de google --}}
                 <a href="{{ route('auth.google.redirect') }}" class="google-login-button">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google logo">
