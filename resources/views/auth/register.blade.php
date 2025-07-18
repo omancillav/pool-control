@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -188,9 +189,9 @@
         .toggle-left {
             transform: translateX(0);
         }
-
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Formulario de Registro -->
@@ -204,14 +205,14 @@
                     <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required>
                 </div>
                 @error('name')
-                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
                 <div class="input-group">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="email" name="email" placeholder="Correo electrónico" value="{{ old('email') }}" required>
                 </div>
                 @error('email')
-                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
@@ -219,15 +220,15 @@
                     <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
                 </div>
                 @error('password')
-                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
-                 <div class="input-group">
+                <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required id="password_confirmation">
                     <i class="fa-solid fa-eye toggle-password" id="togglePasswordConfirmation"></i>
                 </div>
                 @error('password_confirmation')
-                    <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
                 <p style="font-size: 12px; margin: 10px 0;">Al registrarte, aceptas nuestro <a href="{{ route('privacy.notice') }}" target="_blank" style="font-weight: bold; color: #3AB397; margin: 0;">Aviso de Privacidad</a>.</p>
                 <button type="submit">Registrarse</button>
@@ -238,8 +239,8 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <h1>¡Bienvenido de vuelta!</h1>
-                    <p>Ingresa tus datos para usar todas las funciones del sitio.</p>
+                    <h1>¡Hola, Amigo!</h1>
+                    <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
                     <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
                 </div>
             </div>
@@ -247,13 +248,13 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             function setupPasswordToggle(passwordInputId, toggleElementId) {
                 const passwordInput = document.getElementById(passwordInputId);
                 const toggleElement = document.getElementById(toggleElementId);
 
                 if (passwordInput && toggleElement) {
-                    toggleElement.addEventListener('click', function () {
+                    toggleElement.addEventListener('click', function() {
                         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                         passwordInput.setAttribute('type', type);
                         this.classList.toggle('fa-eye');
@@ -266,4 +267,5 @@
         });
     </script>
 </body>
+
 </html>
