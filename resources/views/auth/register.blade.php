@@ -55,12 +55,15 @@
         <!-- Panel de Bienvenida -->
         <div class="toggle-container">
             <div class="toggle">
-                    <div class="toggle-panel toggle-left">
-                        <div class="floating-elements"></div>
-                        <h1>¡Hola, Amigo!</h1>
-                        <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
-                        <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
-                    </div>
+                <div class="toggle-panel toggle-left">
+                    <div class="floating-elements"></div>
+                    <h1>¡Hola, Amigo!</h1>
+                    <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
+                    <a href="/" class="home-btn">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+                    <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
+                </div>
             </div>
         </div>
     </div>
