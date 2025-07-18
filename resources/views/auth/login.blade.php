@@ -54,7 +54,12 @@
                     <div class="floating-elements"></div>
                     <h1>¡Bienvenido de vuelta!</h1>
                     <p>Ingresa tus datos para usar todas las funciones del sitio.</p>
-                    <a href="{{ route('register') }}" class="hidden">Regístrate</a>
+                    <a href="/" class="home-btn">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+                    <a href="{{ route('register') }}" class="hidden">
+                        <i class="fas fa-user-plus"></i> Regístrate
+                    </a>
                 </div>
             </div>
         </div>
