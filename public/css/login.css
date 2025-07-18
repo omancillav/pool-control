@@ -85,13 +85,18 @@ body {
   background-color: transparent;
   color: #fff;
   font-size: 14px;
-  padding: 12px 50px;
+  padding: 12px 0;
   border: 1px solid #fff;
-  border-radius: 8px;
+  border-radius: 25px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   text-decoration: none;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  margin: 15px 0 0;
+  transition: all 0.3s ease;
 }
 
 .container form {
@@ -305,7 +310,41 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Estilos para el botón de inicio */
+.toggle-panel .home-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff !important; /* Forzar color blanco */
+  backdrop-filter: blur(10px);
+  padding: 12px 0;
+  border-radius: 25px;
+  text-decoration: none;
+  margin: 15px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  text-align: center;
+}
+
+.toggle-panel .home-btn i {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.toggle-panel .home-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
 .toggle-panel a.hidden {
+  font-size: 14px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
