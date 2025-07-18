@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +56,7 @@
             color: #333;
             font-size: 15px;
             text-decoration: none;
-            margin: 15px 0 10px;
+            margin: 6px 0;
         }
 
         .container button {
@@ -132,11 +133,15 @@
         }
 
         @keyframes move {
-            0%, 49.99% {
+
+            0%,
+            49.99% {
                 opacity: 0;
                 z-index: 1;
             }
-            50%, 100% {
+
+            50%,
+            100% {
                 opacity: 1;
                 z-index: 5;
             }
@@ -263,7 +268,7 @@
 
         .google-login-button:hover {
             background-color: #f5f5f5;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .google-login-button img {
@@ -290,12 +295,11 @@
             width: 100%;
             transition: background-color 0.3s, box-shadow 0.3s;
             border: 1px solid #1877F2;
-            margin-top: 10px;
         }
 
         .facebook-login-button:hover {
             background-color: #166fe5;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .facebook-login-button img {
@@ -312,6 +316,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container" id="container">
         <!-- Formulario de Inicio de Sesión -->
@@ -350,8 +355,8 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
-                    <h1>¡Hola, Amigo!</h1>
-                    <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
+                    <h1>¡Bienvenido de vuelta!</h1>
+                    <p>Ingresa tus datos para usar todas las funciones del sitio.</p>
                     <a href="{{ route('register') }}" class="hidden">Regístrate</a>
                 </div>
             </div>
@@ -359,16 +364,16 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const togglePassword = document.querySelector('#togglePassword');
             const password = document.querySelector('#password');
 
             if (togglePassword) {
-                togglePassword.addEventListener('click', function () {
+                togglePassword.addEventListener('click', function() {
                     // Cambiar el tipo de input
                     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
                     password.setAttribute('type', type);
-                    
+
                     // Cambiar el icono
                     this.classList.toggle('fa-eye');
                     this.classList.toggle('fa-eye-slash');
