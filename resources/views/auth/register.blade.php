@@ -59,8 +59,17 @@
             margin: 15px 0 10px;
         }
 
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
         .container button {
-            background-color: #3AB397;
+            background: linear-gradient(135deg, #0066cc, #0099ff);
             color: #fff;
             font-size: 14px;
             padding: 12px 50px;
@@ -71,11 +80,13 @@
             text-transform: uppercase;
             margin-top: 10px;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
+            transition: all 0.3s ease;
         }
 
         .container button:hover {
-            background-color: #32a289;
+            background: linear-gradient(135deg, #0055aa, #0088ee);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .container a.hidden {
@@ -111,7 +122,7 @@
         .sign-up {
             left: 50%;
             width: 50%;
-            z-index: 2;
+            z-index: 10;
         }
 
         .input-group {
@@ -160,8 +171,7 @@
         }
 
         .toggle {
-            background: linear-gradient(to right, #3AA8AD, #3AB397);
-            height: 100%;
+            background: linear-gradient(135deg, #0066cc 0%, #0099ff 50%, #66ccff 100%);
             color: #fff;
             position: relative;
             left: 0;
@@ -169,6 +179,7 @@
             width: 200%;
             transform: translateX(0);
             transition: all 0.6s ease-in-out;
+            overflow: hidden;
         }
 
         .toggle-panel {
@@ -184,6 +195,79 @@
             top: 0;
             transform: translateX(0);
             transition: all 0.6s ease-in-out;
+            z-index: 2;
+        }
+
+        .toggle-panel h1,
+        .toggle-panel p,
+        .toggle-panel a {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+
+        .toggle-panel h1 {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .toggle-panel p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-elements::before {
+            width: 200px;
+            height: 200px;
+            top: 15%;
+            left: 10%;
+            animation-delay: -2s;
+        }
+
+        .floating-elements::after {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+
+        .toggle-panel a.hidden {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-panel a.hidden:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: translateY(-2px);
         }
 
         .toggle-left {
@@ -230,7 +314,7 @@
                 @error('password_confirmation')
                 <span style="color: red; font-size: 12px;">{{ $message }}</span>
                 @enderror
-                <p style="font-size: 12px; margin: 10px 0;">Al registrarte, aceptas nuestro <a href="{{ route('privacy.notice') }}" target="_blank" style="font-weight: bold; color: #3AB397; margin: 0;">Aviso de Privacidad</a>.</p>
+                <p style="font-size: 12px; margin: 10px 0;">Al registrarte, aceptas nuestro <a href="{{ route('privacy.notice') }}" target="_blank" style="font-weight: bold; color: #0066cc; margin: 0;">Aviso de Privacidad</a>.</p>
                 <button type="submit">Registrarse</button>
             </form>
         </div>
@@ -238,11 +322,12 @@
         <!-- Panel de Bienvenida -->
         <div class="toggle-container">
             <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>¡Hola, Amigo!</h1>
-                    <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
-                    <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
-                </div>
+                    <div class="toggle-panel toggle-left">
+                        <div class="floating-elements"></div>
+                        <h1>¡Hola, Amigo!</h1>
+                        <p>Regístrate con tus datos personales para usar todas las funciones del sitio.</p>
+                        <a href="{{ route('login') }}" class="hidden">Iniciar Sesión</a>
+                    </div>
             </div>
         </div>
     </div>

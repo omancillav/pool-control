@@ -25,6 +25,18 @@
             min-height: 100vh;
         }
 
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
         .container {
             background-color: #fff;
             border-radius: 30px;
@@ -60,7 +72,7 @@
         }
 
         .container button {
-            background-color: #3AB397;
+            background: linear-gradient(135deg, #0066cc, #0099ff);
             color: #fff;
             font-size: 14px;
             padding: 12px 50px;
@@ -75,7 +87,7 @@
         }
 
         .container button:hover {
-            background-color: #32a289;
+            background: linear-gradient(135deg, #0055aa, #0088ee);
         }
 
         .container a.hidden {
@@ -128,7 +140,7 @@
         .container.toggle .sign-up {
             transform: translateX(100%);
             opacity: 1;
-            z-index: 5;
+            z-index: 10;
             animation: move 0.6s;
         }
 
@@ -198,7 +210,7 @@
         }
 
         .toggle {
-            background: linear-gradient(to right, #3AA8AD, #3AB397);
+            background: linear-gradient(135deg, #0066cc 0%, #0099ff 50%, #66ccff 100%);
             height: 100%;
             color: #fff;
             position: relative;
@@ -211,6 +223,11 @@
 
         .container.toggle .toggle {
             transform: translateX(50%);
+        }
+
+        .toggle {
+            position: relative;
+            overflow: hidden;
         }
 
         .toggle-panel {
@@ -243,6 +260,77 @@
 
         .container.toggle .toggle-right {
             transform: translateX(200%);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-elements::before {
+            width: 200px;
+            height: 200px;
+            top: 15%;
+            left: 10%;
+            animation-delay: -2s;
+        }
+
+        .floating-elements::after {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+
+        .toggle-panel h1,
+        .toggle-panel p,
+        .toggle-panel a {
+            position: relative;
+            z-index: 2;
+        }
+
+        .toggle-panel h1 {
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-panel p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .toggle-panel a.hidden {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-panel a.hidden:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: translateY(-2px);
         }
 
         .divider {
@@ -347,7 +435,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo">
                     <span>Facebook</span>
                 </a>
-                <a href="{{ route('privacy.notice') }}" target="_blank">Aviso de Privacidad</a>
+                <a href="{{ route('privacy.notice') }}" target="_blank" style="font-weight: bold; color: #0066cc; margin: 10px 0;">Aviso de Privacidad</a>
             </form>
         </div>
 
@@ -355,6 +443,7 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
+                    <div class="floating-elements"></div>
                     <h1>¡Bienvenido de vuelta!</h1>
                     <p>Ingresa tus datos para usar todas las funciones del sitio.</p>
                     <a href="{{ route('register') }}" class="hidden">Regístrate</a>
