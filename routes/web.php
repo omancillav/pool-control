@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
+use App\Http\Controllers\LogController;
 
 Route::get('/', function () {
     return view('landing');
@@ -81,3 +82,8 @@ Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->n
 // Rutas de autenticación con Facebook
 Route::get('auth/facebook/redirect', [FacebookAuthController::class, 'redirect'])->name('auth.facebook.redirect');
 Route::get('auth/facebook/callback', [FacebookAuthController::class, 'callback'])->name('auth.facebook.callback');
+
+// Ruta para ver los logs de actividad
+Route::get('/logs', [LogController::class, 'index'])
+    ->name('logs.index')
+    ->middleware(['auth', 'rol:Administrador']);
