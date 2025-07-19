@@ -3,8 +3,7 @@
 @section('title', 'Nueva Clase')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/list.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/panel.css') }}">
 @endsection
 
 @push('js')
