@@ -1,0 +1,28 @@
+.form-header {
+  background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%);
+  border-radius: 12px 12px 0 0;
+  padding: 16px 24px;
+  margin: -32px -16px 24px -16px;
+  box-shadow: 0 2px 4px rgba(176, 190, 197, 0.1);
+}
+
+.form-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #222;
+}
+
+.btn-submit {
+  background: #1976D2;
+  border: 1px solid #1976D2;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 8px 16px;
+}
