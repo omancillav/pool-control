@@ -105,16 +105,18 @@ header {
 
 .logo {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.logo::before {
-  content: "🏊‍♂️";
-  font-size: 2rem;
+.logo img{
+  width: 2rem;
+  aspect-ratio: 1;
+  border-radius: 100px;
+  margin-right: 0.5rem;
 }
 
 nav {

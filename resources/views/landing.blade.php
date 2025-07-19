@@ -4,25 +4,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pool Control - Sistema de Gestión de Alberca</title>
+  <title>Pool Control</title>
   <link href="{{ asset('css/landing.css') }}" rel="stylesheet">
 </head>
 
 <body>
   <header>
     <div class="nav-container">
-      <div class="logo">Pool Control</div>
-      <nav>
-        <a href="#features">Funciones</a>
-        <a href="#benefits">Beneficios</a>
-        <a href="#contact">Contacto</a>
-        <a href="/aviso-de-privacidad" target="_blank">Privacidad</a>
-      </nav>
-      <div class="auth-buttons">
-        <a href="/login" class="btn outline">Iniciar sesión</a>
-        <a href="/register" class="btn primary" style="margin-left: 0.5rem;">Registrarse</a>
+      <div class="logo">
+          <img src="{{ asset('img/logo.webp') }}" alt="">
+          <span>Pool Control</span>
+          </div>
+        <nav>
+          <a href="#features">Funciones</a>
+          <a href="#benefits">Beneficios</a>
+          <a href="#contact">Contacto</a>
+          <a href="/aviso-de-privacidad" target="_blank">Privacidad</a>
+        </nav>
+        <div class="auth-buttons">
+          <a href="/login" class="btn outline">Iniciar sesión</a>
+          <a href="/register" class="btn primary" style="margin-left: 0.5rem;">Registrarse</a>
+        </div>
       </div>
-    </div>
   </header>
 
   <section class="hero">
