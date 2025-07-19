@@ -13,8 +13,8 @@ class UsersSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Usuario',
-                'email' => '123@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('12345678'),
                 'rol' => 'Administrador',
                 'created_at' => Carbon::now(),
