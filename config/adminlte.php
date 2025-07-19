@@ -307,11 +307,13 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'usuarios.list',
+                    'icon' => 'fas fa-list',
                     'can' => ['admin', 'profesor']
                 ],
                 [
-                    'text' => 'Nueva',
+                    'text' => 'Nuevo',
                     'route' => 'usuarios.nueva',
+                    'icon' => 'fas fa-user-plus',
                     'can' => ['admin', 'profesor']
                 ],
             ],
@@ -323,11 +325,13 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'membresias.list',
+                    'icon' => 'fas fa-list',
                     'can' => ['admin', 'cliente']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'membresias.nueva',
+                    'icon' => 'fas fa-plus',
                     'can' => 'admin'
                 ],
             ],
@@ -339,11 +343,13 @@ return [
                 [
                     'text' => 'Lista',
                     'route' => 'clases.list',
+                    'icon' => 'fas fa-list',
                     'can' => ['admin', 'cliente', 'profesor']
                 ],
                 [
                     'text' => 'Nueva',
                     'route' => 'clases.nueva',
+                    'icon' => 'fas fa-plus',
                     'can' => ['admin', 'profesor']
                 ],
             ],
