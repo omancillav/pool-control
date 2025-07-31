@@ -58,6 +58,22 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "test-unit": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test --testsuite=Unit"
+        ],
+        "test-feature": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test --testsuite=Feature"
+        ],
+        "test-coverage": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test --coverage"
+        ],
+        "test-coverage-html": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test --coverage-html coverage"
         ]
     },
     "extra": {
