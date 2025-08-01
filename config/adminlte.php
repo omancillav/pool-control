@@ -197,7 +197,7 @@ return [
     'classes_content_header' => 'content-header',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-light-primary elevation-1',
-    'classes_sidebar_nav' => 'nav-child-indent',
+    'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light elevation-1',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container-fluid',
@@ -488,16 +488,22 @@ return [
                         
                         /* Parent menu items */
                         .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active { 
-                            background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; 
-                            color: #222 !important; 
+                            background: #1976D2 !important; 
+                            color: white !important; 
                             border-radius: 6px !important; 
                             margin: 2px 8px !important; 
                             font-weight: 600 !important;
                         }
+                        .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link:hover:not(.active) { 
+                            background: rgba(179, 212, 252, 0.2) !important; 
+                            color: #222 !important; 
+                            border-radius: 6px !important; 
+                            margin: 2px 8px !important; 
+                            transition: all 0.15s ease !important;
+                        }
                         
-                        /* Child menu items indentation */
+                        /* Child menu items */
                         .nav-sidebar .nav-treeview > .nav-item > .nav-link { 
-                            padding-left: 1.8rem !important; 
                             font-size: 0.9rem !important; 
                             color: #555 !important; 
                         }
@@ -506,12 +512,20 @@ return [
                             font-size: 0.9rem !important; 
                             margin-right: 0.5rem !important; 
                         }
-                        .nav-sidebar .nav-treeview > .nav-item > .nav-link.active { 
-                            background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; 
+                        .nav-sidebar .nav-treeview > .nav-item > .nav-link:hover:not(.active) { 
+                            background: rgba(179, 212, 252, 0.15) !important; 
                             color: #222 !important; 
                             border-radius: 6px !important; 
-                            margin: 2px 8px 2px 16px !important; 
+                            margin: 2px 8px !important; 
+                            transition: all 0.15s ease !important;
+                        }
+                        .nav-sidebar .nav-treeview > .nav-item > .nav-link.active { 
+                            background: rgba(25, 118, 210, 0.2) !important; 
+                            color: #1976D2 !important; 
+                            border-radius: 6px !important; 
+                            margin: 2px 8px !important; 
                             font-weight: 600 !important; 
+                            border-left: 3px solid #1976D2 !important;
                         }
                         
                         /* Navbar improvements */
