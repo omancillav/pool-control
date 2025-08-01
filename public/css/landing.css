@@ -462,8 +462,8 @@ section {
 
 /* FOOTER */
 footer {
-  background: var(--text);
-  color: white;
+  /* background: var(--text); */
+  color: var(--text);
   padding: 2rem;
   text-align: center;
   margin-top: 4rem;
