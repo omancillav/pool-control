@@ -95,7 +95,7 @@
   </section>
 
   <footer>
-    <p>&copy; 2024 Pool Control. Todos los derechos reservados. Hecho con 💙 para instructores de natación.</p>
+    <p>&copy; 2024 Pool Control. Diseñado con dedicación para profesionales de la natación.</p>
   </footer>
 
   <script>
