@@ -155,7 +155,7 @@ return [
     'layout_topnav' => null,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -190,17 +190,17 @@ return [
     |
     */
 
-    'classes_body' => '',
-    'classes_brand' => '',
-    'classes_brand_text' => '',
-    'classes_content_wrapper' => '',
-    'classes_content_header' => '',
+    'classes_body' => 'sidebar-mini layout-fixed layout-navbar-fixed',
+    'classes_brand' => 'navbar-primary navbar-dark elevation-1',
+    'classes_brand_text' => 'text-white font-weight-bold',
+    'classes_content_wrapper' => 'content-wrapper',
+    'classes_content_header' => 'content-header',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_sidebar' => 'sidebar-light-primary elevation-1',
+    'classes_sidebar_nav' => 'nav-child-indent',
+    'classes_topnav' => 'navbar-white navbar-light elevation-1',
     'classes_topnav_nav' => 'navbar-expand',
-    'classes_topnav_container' => 'container',
+    'classes_topnav_container' => 'container-fluid',
 
     /*
     |--------------------------------------------------------------------------
@@ -459,6 +459,70 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'PoolControlTheme' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'data:text/css;base64,' . base64_encode('
+                        /* Pool Control Custom Theme */
+                        .content-wrapper, .main-footer { background-color: #E6F0FA !important; }
+                        .main-header.navbar { box-shadow: 0 2px 4px rgba(176, 190, 197, 0.1) !important; padding: 0.5rem 1rem !important; }
+                        .main-sidebar { box-shadow: 0 2px 8px rgba(176, 190, 197, 0.12) !important; }
+                        .card { border-radius: 12px !important; border: 1px solid #E0E0E0 !important; box-shadow: 0 2px 8px rgba(176, 190, 197, 0.12) !important; }
+                        .card-header { background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; border-radius: 12px 12px 0 0 !important; }
+                        .card-title { color: #222 !important; font-weight: bold !important; }
+                        .btn-primary { background-color: #1976D2 !important; border-color: #1976D2 !important; border-radius: 6px !important; }
+                        .form-control { border-radius: 6px !important; border: 1px solid #E0E0E0 !important; }
+                        .table { border-radius: 6px !important; }
+                        .content-header { background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; border-radius: 12px !important; margin-bottom: 20px !important; }
+                        
+                        /* Sidebar improvements */
+                        .nav-sidebar .nav-link { padding: 0.7rem 1rem !important; font-size: 0.95rem !important; }
+                        .nav-sidebar .nav-icon { color: #1976D2 !important; margin-right: 0.5rem !important; font-size: 1.1rem !important; }
+                        .nav-sidebar .nav-link .nav-icon { width: 1.6rem !important; }
+                        
+                        /* Parent menu items */
+                        .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active { 
+                            background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; 
+                            color: #222 !important; 
+                            border-radius: 6px !important; 
+                            margin: 2px 8px !important; 
+                            font-weight: 600 !important;
+                        }
+                        
+                        /* Child menu items indentation */
+                        .nav-sidebar .nav-treeview > .nav-item > .nav-link { 
+                            padding-left: 1.8rem !important; 
+                            font-size: 0.9rem !important; 
+                            color: #555 !important; 
+                        }
+                        .nav-sidebar .nav-treeview > .nav-item > .nav-link .nav-icon { 
+                            color: #1976D2 !important; 
+                            font-size: 0.9rem !important; 
+                            margin-right: 0.5rem !important; 
+                        }
+                        .nav-sidebar .nav-treeview > .nav-item > .nav-link.active { 
+                            background: linear-gradient(90deg, #E6F0FA 0%, #B3D4FC 100%) !important; 
+                            color: #222 !important; 
+                            border-radius: 6px !important; 
+                            margin: 2px 8px 2px 16px !important; 
+                            font-weight: 600 !important; 
+                        }
+                        
+                        /* Navbar improvements */
+                        .navbar-nav .nav-link { padding: 0.7rem 1rem !important; font-size: 0.95rem !important; }
+                        .navbar .navbar-nav .nav-link { color: #222 !important; }
+                        .dropdown-toggle::after { margin-left: 0.5rem !important; }
+                        
+                        /* User dropdown improvements */
+                        .navbar-nav .dropdown-menu { margin-top: 0.25rem !important; }
+                        .dropdown-item { padding: 0.5rem 1rem !important; }
+                    '),
                 ],
             ],
         ],
