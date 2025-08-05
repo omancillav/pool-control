@@ -34,4 +34,4 @@ RUN composer install --no-dev --optimize-autoloader
 RUN php artisan key:generate --force
 
 # Exponer puerto 80
-EXPOSE 80
+EXPOSE 1000
