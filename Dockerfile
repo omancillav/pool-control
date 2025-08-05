@@ -33,10 +33,10 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 EXPOSE 8080
 
 # Comando por defecto: optimiza, migra y arranca servidor
-CMD php artisan config:clear && \
+CMD php artisan migrate --force && \
+    php artisan config:clear && \
     php artisan cache:clear && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
-    php artisan migrate --force && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
