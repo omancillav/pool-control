@@ -1,47 +1,41 @@
-# Usa la imagen oficial PHP 8.2 con Apache
-FROM php:8.2-apache
+# Usar una imagen base oficial de PHP con FPM
+FROM php:8.2-fpm
 
-# Instala dependencias y extensiones necesarias
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    zip \
-    unzip \
-    curl \
     git \
-    && docker-php-ext-install zip pdo_mysql
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-# Instala Composer globalmente
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instalar extensiones de PHP necesarias para Laravel
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Copia todo el código al directorio de Apache
-COPY . /var/www/html
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Establece directorio de trabajo
-WORKDIR /var/www/html
+# Establecer el directorio de trabajo
+WORKDIR /var/www
 
-# Cambia la raíz del documento de Apache a la carpeta "public"
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+# Copiar el código de la aplicación
+COPY . .
 
-# Permite usar .htaccess para que funcione el routing de Laravel
-RUN echo '<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>' >> /etc/apache2/apache2.conf
+# Instalar dependencias de PHP
+RUN composer install --optimize-autoloader --no-dev
 
-# Habilita el módulo rewrite de Apache
-RUN a2enmod rewrite
+# Optimizar Laravel para producción
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
 
-# Copia .env.example a .env si no existe (para que la app tenga configuración)
-RUN [ -f .env ] || cp .env.example .env
+# Asegurar permisos correctos
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Instala dependencias PHP con Composer sin dev y optimiza autoload
-RUN composer install --no-dev --optimize-autoloader
+# Exponer el puerto (Render usa el puerto 10000 por defecto)
+EXPOSE 10000
 
-# Limpia configuración cacheada y genera la clave de Laravel
-RUN php artisan config:clear && php artisan key:generate
-
-# Ajusta permisos para que Apache pueda escribir en storage y cache
-RUN chown -R www-data:www-data storage bootstrap/cache
-
-# Expone puerto 80 para HTTP
-EXPOSE 80
-
-# Ejecuta Apache en primer plano (modo foreground)
-CMD ["apache2-foreground"]
+# Comando para iniciar el servidor
+CMD php artisan serve --host=0.0.0.0 --port=10000
