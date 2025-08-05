@@ -26,13 +26,15 @@ COPY . /var/www
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Instala dependencias de Laravel
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+# Instala dependencias de Laravel y AdminLTE
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
+    php artisan adminlte:install && \
+    php artisan adminlte:publish --force
 
 # Expone el puerto que usará Laravel
 EXPOSE 8080
 
-# Comando por defecto: optimiza, migra y arranca servidor
+# Comando por defecto: migra, limpia caches, optimiza y arranca servidor
 CMD php artisan migrate --force && \
     php artisan config:clear && \
     php artisan cache:clear && \
