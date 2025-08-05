@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     curl \
     libpq-dev \
+    libonig-dev \
+    autoconf \
     && docker-php-ext-install zip pdo pdo_pgsql mbstring bcmath
 
 # Instala Composer
