@@ -1,38 +1,40 @@
-# 1. Usa una imagen base oficial de PHP con Apache
 FROM php:8.2-apache
 
-# 2. Instala las dependencias necesarias para Laravel y PHP
+# Instala dependencias necesarias
 RUN apt-get update && apt-get install -y \
     libzip-dev zip unzip curl git \
-    libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql zip mbstring exif pcntl bcmath gd
+    && docker-php-ext-install zip pdo_mysql
 
-# 3. Instala Composer (gestor de dependencias PHP)
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Instala Composer globalmente
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# 4. Copia todo el código de tu proyecto al contenedor
+# Copia el código al contenedor
 COPY . /var/www/html
 
-# 5. Define el directorio de trabajo
 WORKDIR /var/www/html
 
-# 6. Da permisos necesarios a storage y cache para Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Cambia el DocumentRoot a la carpeta public de Laravel
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-# 7. Habilita mod_rewrite de Apache para URLs amigables
+# Habilita mod_rewrite para URLs amigables de Laravel
 RUN a2enmod rewrite
 
-# 8. Instala las dependencias PHP de Laravel (sin dev)
-RUN composer install --no-dev --optimize-autoloader
+# Permite que Apache use .htaccess y reconozca index.php
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
-# 9. Copia el archivo .env.example a .env si no existe
+# Copia .env si no existe (opcional, para entorno local)
 RUN [ -f .env ] || cp .env.example .env
 
-# 10. Genera la clave de Laravel
+# Instala las dependencias de Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Ajusta permisos para storage y cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Genera la clave de Laravel
 RUN php artisan key:generate
 
-# 11. Expone el puerto 80 para HTTP
+# Expone el puerto 80
 EXPOSE 80
 
-# 12. Inicia Apache en primer plano
 CMD ["apache2-foreground"]
