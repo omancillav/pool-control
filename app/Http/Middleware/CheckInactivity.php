@@ -26,8 +26,8 @@ class CheckInactivity
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                
-                return redirect('/login');
+                                
+                return redirect('/login')->with('message', 'Su sesión ha expirado por inactividad.');
             }
             
             // Actualizar la última actividad

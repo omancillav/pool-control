@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    @if(session('message'))
+        <script>alert("{{ session('message') }}");</script>
+    @endif
     <div class="container" id="container">
         <!-- Formulario de Inicio de Sesión -->
         <div class="form-container sign-in">
