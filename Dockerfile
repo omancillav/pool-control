@@ -17,9 +17,8 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Ejecuta adminlte:install solo si no está instalado (evita error si ya existe)
-RUN php artisan adminlte:install || echo "AdminLTE ya instalado"
-
-RUN php artisan adminlte:publish --force
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
+    php artisan adminlte:install || echo "AdminLTE ya instalado"
 
 EXPOSE 8080
 
