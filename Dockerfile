@@ -1,40 +1,28 @@
-# Imagen oficial de PHP con Composer
 FROM php:8.2-cli
 
-# Establece el directorio de trabajo
 WORKDIR /var/www
 
-# Instala dependencias necesarias para Laravel y PostgreSQL
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
-    git \
-    zip \
-    curl \
-    libpq-dev \
-    libonig-dev \
-    autoconf \
-    && docker-php-ext-install zip pdo pdo_pgsql mbstring bcmath
+    libzip-dev unzip git zip curl libpq-dev libonig-dev autoconf \
+    && docker-php-ext-install zip pdo pdo_pgsql mbstring bcmath \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instala Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copia los archivos del proyecto
 COPY . /var/www
 
-# Ajusta permisos para Laravel
-RUN chown -R www-data:www-data /var/www \
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Instala dependencias de Laravel y AdminLTE
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
-    php artisan adminlte:install && \
-    php artisan adminlte:publish --force
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Expone el puerto que usará Laravel
+# Ejecuta adminlte:install solo si no está instalado (evita error si ya existe)
+RUN php artisan adminlte:install || echo "AdminLTE ya instalado"
+
+RUN php artisan adminlte:publish --force
+
 EXPOSE 8080
 
-# Comando por defecto: migra, limpia caches, optimiza y arranca servidor
 CMD php artisan migrate --force && \
     php artisan config:clear && \
     php artisan cache:clear && \
