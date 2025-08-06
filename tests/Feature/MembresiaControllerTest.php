@@ -115,14 +115,14 @@ class MembresiaControllerTest extends TestCase
         $cliente1 = User::factory()->create(['name' => 'Juan Pérez', 'rol' => 'Cliente']);
         $cliente2 = User::factory()->create(['name' => 'María García', 'rol' => 'Cliente']);
         
-        $membresia1 = Membresia::factory()->create(['id_usuario' => $cliente1->id, 'clases_adquiridas' => 10]);
-        $membresia2 = Membresia::factory()->create(['id_usuario' => $cliente2->id, 'clases_adquiridas' => 20]);
+        $membresia1 = Membresia::factory()->create(['id_usuario' => $cliente1->id, 'clases_adquiridas' => 15]);
+        $membresia2 = Membresia::factory()->create(['id_usuario' => $cliente2->id, 'clases_adquiridas' => 25]);
 
-        $response = $this->actingAs($this->admin)->get('/membresias/lista?search=10');
+        $response = $this->actingAs($this->admin)->get('/membresias/lista?search=15');
 
         $response->assertStatus(200);
         $response->assertSee('Juan Pérez');
-        $response->assertSee('10');
+        $response->assertSee('15');
         // Verificar que la tabla solo muestra 1 registro (Juan Pérez)
         $this->assertEquals(1, substr_count($response->getContent(), '<tr>') - 1); // -1 para excluir el header
     }
