@@ -17,7 +17,10 @@ class MembresiaController extends Controller
                 return $query->where('id_usuario', 'like', "%{$search}%")
                     ->orWhere('clases_adquiridas', 'like', "%{$search}%")
                     ->orWhere('clases_disponibles', 'like', "%{$search}%")
-                    ->orWhere('clases_ocupadas', 'like', "%{$search}%");
+                    ->orWhere('clases_ocupadas', 'like', "%{$search}%")
+                    ->orWhereHas('usuario', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
             })
             ->latest()
             ->paginate(10);
@@ -37,7 +40,10 @@ class MembresiaController extends Controller
                 return $query->where('id_usuario', 'like', "%{$search}%")
                     ->orWhere('clases_adquiridas', 'like', "%{$search}%")
                     ->orWhere('clases_disponibles', 'like', "%{$search}%")
-                    ->orWhere('clases_ocupadas', 'like', "%{$search}%");
+                    ->orWhere('clases_ocupadas', 'like', "%{$search}%")
+                    ->orWhereHas('usuario', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
             })
             ->latest()
             ->paginate(10);
