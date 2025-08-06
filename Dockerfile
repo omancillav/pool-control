@@ -1,49 +1,40 @@
 FROM php:8.2-apache
 
-# Activar mod_rewrite para Laravel
+# Activar mod_rewrite y configurar Apache para Laravel
 RUN a2enmod rewrite
 
-# Establecer directorio de trabajo
-WORKDIR /var/www/html
+# Copiar proyecto Laravel
+COPY . /var/www/html
 
-# Instalar extensiones necesarias
+# Establecer permisos para carpetas necesarias
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Instalar dependencias del sistema y PHP
 RUN apt-get update && apt-get install -y \
-    libzip-dev unzip git zip curl libpq-dev libonig-dev autoconf \
+    libzip-dev unzip git zip curl libpq-dev libonig-dev \
     && docker-php-ext-install zip pdo pdo_pgsql mbstring bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar proyecto Laravel
-COPY . .
-
-# Configurar Apache para servir desde public
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html/public\n\
-    <Directory /var/www/html/public>\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
-
-# Asignar permisos a las carpetas necesarias
-RUN chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache
-
 # Instalar dependencias del proyecto
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Instalar AdminLTE y publicar assets
-RUN php artisan adminlte:install --force && \
-    php artisan vendor:publish --provider="JeroenNoten\LaravelAdminLte\AdminLteServiceProvider" --tag=assets --force
+# Instalar AdminLTE y publicar assets (si no están ya instalados)
+RUN php artisan adminlte:install --force || true && \
+    php artisan vendor:publish --provider="JeroenNoten\\LaravelAdminLte\\AdminLteServiceProvider" --tag=assets --force || true
+
+# Configurar Apache para servir la carpeta public/ de Laravel
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
+    echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Exponer puerto
 EXPOSE 80
 
-# Comando final (migrar y cachear)
-CMD php artisan config:clear && \
-    php artisan migrate --force && \
+# Ejecutar comandos Laravel antes de arrancar Apache
+CMD php artisan migrate --force && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
