@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\VerificaRol;
+use App\Http\Middleware\CheckInactivity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         });
         
         Route::aliasMiddleware('rol', VerificaRol::class);
+        Route::aliasMiddleware('inactivity', CheckInactivity::class);
     }
 }
