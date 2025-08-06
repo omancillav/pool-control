@@ -1,4 +1,3 @@
-# Imagen base con Apache
 FROM php:8.2-apache
 
 # Activar mod_rewrite para Laravel
@@ -16,8 +15,17 @@ RUN apt-get update && apt-get install -y \
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar todo el proyecto Laravel
+# Copiar proyecto Laravel
 COPY . .
+
+# Configurar Apache para servir desde public
+RUN echo '<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html/public\n\
+    <Directory /var/www/html/public>\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>\n\
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 # Asignar permisos a las carpetas necesarias
 RUN chown -R www-data:www-data storage bootstrap/cache && \
@@ -33,7 +41,7 @@ RUN php artisan adminlte:install --force && \
 # Exponer puerto
 EXPOSE 80
 
-# Comando de inicio en Render (migración primero, luego caches, luego servidor)
+# Comando final (migrar y cachear)
 CMD php artisan config:clear && \
     php artisan migrate --force && \
     php artisan config:cache && \
