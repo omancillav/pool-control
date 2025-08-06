@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\VerificaRol;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,16 +23,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('admin', function ($user){
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
+        Gate::define('admin', function ($user) {
             return $user->rol === 'Administrador';
         });
-        Gate::define('cliente', function ($user){
+        Gate::define('cliente', function ($user) {
             return $user->rol === 'Cliente';
         });
-        Gate::define('profesor', function ($user){
+        Gate::define('profesor', function ($user) {
             return $user->rol === 'Profesor';
         });
-        
+
         Route::aliasMiddleware('rol', VerificaRol::class);
     }
 }
