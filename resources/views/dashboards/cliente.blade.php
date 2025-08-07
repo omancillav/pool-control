@@ -38,7 +38,6 @@
                         <div class="mb-3">
                             <i class="fas fa-id-card fa-3x text-muted mb-3"></i>
                             <p class="mb-4">No tienes una membresía activa</p>
-                            <a href="{{ route('membresias.list') }}" class="btn btn-outline-primary">Ver Membresías Disponibles</a>
                         </div>
                     </div>
                 @endif
