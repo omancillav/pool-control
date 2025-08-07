@@ -378,6 +378,30 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Asistencias',
+            'icon' => 'fas fa-fw fa-user-check',
+            'submenu' => [
+                [
+                    'text' => 'Mis Asistencias',
+                    'route' => 'asistencias.mis-asistencias',
+                    'icon' => 'fas fa-clipboard-check',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Ver Asistencias',
+                    'route' => 'asistencias.index',
+                    'icon' => 'fas fa-list-check',
+                    'can' => ['admin', 'profesor']
+                ],
+                [
+                    'text' => 'Gestión de Asistencias',
+                    'route' => 'asistencias.gestion',
+                    'icon' => 'fas fa-check-circle',
+                    'can' => ['admin', 'profesor']
+                ],
+            ],
+        ],
     ],
 
 
