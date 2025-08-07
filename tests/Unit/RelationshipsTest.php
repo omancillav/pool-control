@@ -62,20 +62,6 @@ class RelationshipsTest extends TestCase
     }
 
     /** @test */
-    public function clase_can_have_multiple_usuarios_enrolled()
-    {
-        // Sistema de asistencias no implementado aún
-        $this->markTestSkipped('Sistema de asistencias/inscripciones no implementado');
-    }
-
-    /** @test */
-    public function user_can_be_enrolled_in_multiple_clases()
-    {
-        // Sistema de asistencias no implementado aún
-        $this->markTestSkipped('Sistema de asistencias/inscripciones no implementado');
-    }
-
-    /** @test */
     public function can_get_user_membresias_with_eager_loading()
     {
         $user = User::factory()->create();

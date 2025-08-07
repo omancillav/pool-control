@@ -46,13 +46,6 @@ class ClaseModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_have_usuarios_enrolled()
-    {
-        // Funcionalidad de inscripciones no implementada aún
-        $this->markTestSkipped('Sistema de asistencias/inscripciones no implementado');
-    }
-
-    /** @test */
     public function it_validates_lugares_consistency()
     {
         $profesor = User::factory()->create(['rol' => 'Profesor']);

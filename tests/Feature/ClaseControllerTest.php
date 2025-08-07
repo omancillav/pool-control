@@ -144,32 +144,6 @@ class ClaseControllerTest extends TestCase
     }
 
     /** @test */
-    public function cliente_can_register_for_clase()
-    {
-        // Este test requiere implementar la ruta /clases/{id}/inscribir
-        // Comentado temporalmente hasta que se implemente
-        $this->markTestSkipped('Ruta de inscripción a clases no implementada aún');
-        
-        /*
-        $clase = Clase::factory()->create([
-            'id_profesor' => $this->profesor->id,
-            'lugares_disponibles' => 5
-        ]);
-
-        $response = $this->actingAs($this->cliente)->post("/clases/{$clase->id}/inscribir");
-
-        $response->assertRedirect();
-        $this->assertTrue($clase->usuarios()->where('id_usuario', $this->cliente->id)->exists());
-        */
-    }
-
-    /** @test */
-    public function cliente_cannot_register_for_full_clase()
-    {
-        $this->markTestSkipped('El sistema de inscripciones no está implementado aún');
-    }
-
-    /** @test */
     public function creating_clase_requires_valid_data()
     {
         $response = $this->actingAs($this->admin)->post('/clases/store', [
@@ -187,13 +161,5 @@ class ClaseControllerTest extends TestCase
             'nivel',
             'lugares'
         ]);
-    }
-
-    /** @test */
-    public function fecha_cannot_be_in_the_past()
-    {
-        // Actualmente la validación de fecha pasada solo está en el frontend (JavaScript)
-        // No está implementada en el backend, por lo que este test se omite
-        $this->markTestSkipped('Validación de fecha pasada no implementada en backend aún');
     }
 }
