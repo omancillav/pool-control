@@ -354,6 +354,30 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Reservaciones',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+            'submenu' => [
+                [
+                    'text' => 'Reservar Clase',
+                    'route' => 'reservaciones.index',
+                    'icon' => 'fas fa-calendar-plus',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Mis Reservaciones',
+                    'route' => 'reservaciones.mis-reservaciones',
+                    'icon' => 'fas fa-calendar-check',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Gestión de Reservaciones',
+                    'route' => 'reservaciones.gestion',
+                    'icon' => 'fas fa-tasks',
+                    'can' => ['admin', 'profesor']
+                ],
+            ],
+        ],
     ],
 
 

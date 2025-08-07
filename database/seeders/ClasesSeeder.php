@@ -18,7 +18,7 @@ class ClasesSeeder extends Seeder
             [
                 'id_profesor' => $idProfesor,
                 'fecha' => Carbon::now()->addDays(1)->format('Y-m-d'),
-                'tipo' => 'Presencial',
+                'nivel' => 'Principiante',
                 'lugares' => 15,
                 'lugares_ocupados' => 5,
                 'lugares_disponibles' => 10,
@@ -28,7 +28,7 @@ class ClasesSeeder extends Seeder
             [
                 'id_profesor' => $idProfesor,
                 'fecha' => Carbon::now()->addDays(3)->format('Y-m-d'),
-                'tipo' => 'Virtual',
+                'nivel' => 'Intermedio',
                 'lugares' => 20,
                 'lugares_ocupados' => 8,
                 'lugares_disponibles' => 12,
@@ -38,7 +38,7 @@ class ClasesSeeder extends Seeder
             [
                 'id_profesor' => $idProfesor,
                 'fecha' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'tipo' => 'Presencial',
+                'nivel' => 'Avanzado',
                 'lugares' => 10,
                 'lugares_ocupados' => 3,
                 'lugares_disponibles' => 7,
