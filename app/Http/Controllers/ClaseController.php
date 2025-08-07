@@ -17,7 +17,10 @@ class ClaseController extends Controller
                 return $query->where('tipo', 'like', "%{$search}%")
                     ->orWhere('lugares', 'like', "%{$search}%")
                     ->orWhere('lugares_ocupados', 'like', "%{$search}%")
-                    ->orWhere('lugares_disponibles', 'like', "%{$search}%");
+                    ->orWhere('lugares_disponibles', 'like', "%{$search}%")
+                    ->orWhereHas('profesor', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
             })
             ->latest()
             ->paginate(10);
@@ -36,7 +39,10 @@ class ClaseController extends Controller
                 return $query->where('tipo', 'like', "%{$search}%")
                     ->orWhere('lugares', 'like', "%{$search}%")
                     ->orWhere('lugares_ocupados', 'like', "%{$search}%")
-                    ->orWhere('lugares_disponibles', 'like', "%{$search}%");
+                    ->orWhere('lugares_disponibles', 'like', "%{$search}%")
+                    ->orWhereHas('profesor', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
             })
             ->latest()
             ->paginate(10);
