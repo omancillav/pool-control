@@ -215,15 +215,22 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label for="tipo{{ $clase->id }}">Tipo (*)</label>
-                                    <input type="text" name="tipo" class="form-control @error('tipo') is-invalid @enderror"
-                                        id="tipo{{ $clase->id }}"
-                                        value="{{ old('tipo', $clase->tipo) }}"
+                                    <label for="nivel{{ $clase->id }}">Nivel (*)</label>
+                                    <select name="nivel" class="form-control @error('nivel') is-invalid @enderror"
+                                        id="nivel{{ $clase->id }}"
                                         required
-                                        aria-describedby="tipo-error{{ $clase->id }}"
-                                        title="Ingrese el tipo de clase">
-                                    @error('tipo')
-                                    <div class="invalid-feedback" id="tipo-error{{ $clase->id }}">{{ $message }}</div>
+                                        aria-describedby="nivel-error{{ $clase->id }}"
+                                        title="Seleccione el nivel de la clase">
+                                        <option value="">Seleccionar nivel</option>
+                                        <option value="Principiante" {{ old('nivel', $clase->nivel) == 'Principiante' ? 'selected' : '' }}>Principiante</option>
+                                        <option value="Intermedio" {{ old('nivel', $clase->nivel) == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
+                                        <option value="Avanzado" {{ old('nivel', $clase->nivel) == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                                        <option value="Competencia" {{ old('nivel', $clase->nivel) == 'Competencia' ? 'selected' : '' }}>Competencia</option>
+                                        <option value="Terapéutico" {{ old('nivel', $clase->nivel) == 'Terapéutico' ? 'selected' : '' }}>Terapéutico</option>
+                                        <option value="Infantil" {{ old('nivel', $clase->nivel) == 'Infantil' ? 'selected' : '' }}>Infantil</option>
+                                    </select>
+                                    @error('nivel')
+                                    <div class="invalid-feedback" id="nivel-error{{ $clase->id }}">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>

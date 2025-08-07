@@ -45,7 +45,7 @@
                     <!-- <th>ID</th> -->
                     <th>Fecha</th>
                     <th>Profesor</th>
-                    <th>Tipo</th>
+                    <th>Nivel</th>
                     <th>Lugares</th>
                     <th>Lugares Ocupados</th>
                     <th>Lugares Disponibles</th>
@@ -59,7 +59,7 @@
                     <!-- <td>{{ $clase->id }}</td> -->
                     <td>{{ $clase->fecha->format('d/m/Y') }}</td>
                     <td>{{ $clase->profesor->name ?? 'Sin asignar' }} {{ $clase->profesor->last_name ?? '' }}</td>
-                    <td>{{ $clase->tipo }}</td>
+                    <td>{{ $clase->nivel }}</td>
                     <td>{{ $clase->lugares }}</td>
                     <td>{{ $clase->lugares_ocupados }}</td>
                     <td>{{ $clase->lugares_disponibles }}</td>

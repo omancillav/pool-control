@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ReservacionController;
 
 Route::get('/', function () {
     return view('landing');
@@ -87,3 +88,26 @@ Route::get('auth/facebook/callback', [FacebookAuthController::class, 'callback']
 Route::get('/logs', [LogController::class, 'index'])
     ->name('logs.index')
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
+
+// Rutas para Reservaciones
+// Para clientes - ver clases disponibles y hacer reservaciones
+Route::get('/reservaciones', [ReservacionController::class, 'index'])
+    ->name('reservaciones.index')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::get('/reservaciones/mis-reservaciones', [ReservacionController::class, 'misReservaciones'])
+    ->name('reservaciones.mis-reservaciones')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::post('/reservaciones/store', [ReservacionController::class, 'store'])
+    ->name('reservaciones.store')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::delete('/reservaciones/{id}', [ReservacionController::class, 'cancelar'])
+    ->name('reservaciones.cancelar')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+
+// Para administradores y profesores - gestión de reservaciones
+Route::get('/reservaciones/gestion', [ReservacionController::class, 'gestion'])
+    ->name('reservaciones.gestion')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
+Route::delete('/reservaciones/admin/{id}', [ReservacionController::class, 'cancelarAdmin'])
+    ->name('reservaciones.cancelar-admin')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);

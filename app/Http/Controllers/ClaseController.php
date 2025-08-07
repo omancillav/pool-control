@@ -14,7 +14,7 @@ class ClaseController extends Controller
 
         $clases = Clase::with('profesor')
             ->when($search, function ($query, $search) {
-                return $query->where('tipo', 'like', "%{$search}%")
+                return $query->where('nivel', 'like', "%{$search}%")
                     ->orWhere('lugares', 'like', "%{$search}%")
                     ->orWhere('lugares_ocupados', 'like', "%{$search}%")
                     ->orWhere('lugares_disponibles', 'like', "%{$search}%")
@@ -36,7 +36,7 @@ class ClaseController extends Controller
 
         $clases = Clase::with('profesor')
             ->when($search, function ($query, $search) {
-                return $query->where('tipo', 'like', "%{$search}%")
+                return $query->where('nivel', 'like', "%{$search}%")
                     ->orWhere('lugares', 'like', "%{$search}%")
                     ->orWhere('lugares_ocupados', 'like', "%{$search}%")
                     ->orWhere('lugares_disponibles', 'like', "%{$search}%")
@@ -57,7 +57,7 @@ class ClaseController extends Controller
         $validated = $request->validate([
             'fecha' => 'required|date',
             'id_profesor' => 'required|exists:users,id',
-            'tipo' => 'required|string|max:255',
+            'nivel' => 'required|string|max:255',
             'lugares' => 'required|integer|min:0',
             'lugares_ocupados' => 'required|integer|min:0',
             'lugares_disponibles' => 'required|integer|min:0',
@@ -81,7 +81,7 @@ class ClaseController extends Controller
         $validated = $request->validate([
             'fecha' => 'required|date',
             'id_profesor' => 'required|exists:users,id',
-            'tipo' => 'required|string|max:255',
+            'nivel' => 'required|string|max:255',
             'lugares' => 'required|integer|min:0',
             'lugares_ocupados' => 'required|integer|min:0',
             'lugares_disponibles' => 'required|integer|min:0',
