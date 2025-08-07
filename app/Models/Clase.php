@@ -13,7 +13,7 @@ class Clase extends Model
     protected $fillable = [
         'fecha',
         'id_profesor',
-        'tipo',
+        'nivel',
         'lugares',
         'lugares_ocupados',
         'lugares_disponibles',
@@ -41,5 +41,21 @@ class Clase extends Model
     public function usuarios()
     {
         return $this->belongsToMany(User::class, 'asistencias', 'id_clase', 'id_usuario');
+    }
+
+    /**
+     * Las reservaciones de esta clase.
+     */
+    public function reservaciones()
+    {
+        return $this->hasMany(Reservacion::class, 'id_clase');
+    }
+
+    /**
+     * Las asistencias de la clase.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class, 'id_clase');
     }
 }

@@ -354,6 +354,54 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Reservaciones',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+            'submenu' => [
+                [
+                    'text' => 'Reservar Clase',
+                    'route' => 'reservaciones.index',
+                    'icon' => 'fas fa-calendar-plus',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Mis Reservaciones',
+                    'route' => 'reservaciones.mis-reservaciones',
+                    'icon' => 'fas fa-calendar-check',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Gestión de Reservaciones',
+                    'route' => 'reservaciones.gestion',
+                    'icon' => 'fas fa-tasks',
+                    'can' => ['admin', 'profesor']
+                ],
+            ],
+        ],
+        [
+            'text' => 'Asistencias',
+            'icon' => 'fas fa-fw fa-user-check',
+            'submenu' => [
+                [
+                    'text' => 'Mis Asistencias',
+                    'route' => 'asistencias.mis-asistencias',
+                    'icon' => 'fas fa-clipboard-check',
+                    'can' => 'cliente'
+                ],
+                [
+                    'text' => 'Ver Asistencias',
+                    'route' => 'asistencias.index',
+                    'icon' => 'fas fa-list-check',
+                    'can' => ['admin', 'profesor']
+                ],
+                [
+                    'text' => 'Gestión de Asistencias',
+                    'route' => 'asistencias.gestion',
+                    'icon' => 'fas fa-check-circle',
+                    'can' => ['admin', 'profesor']
+                ],
+            ],
+        ],
     ],
 
 

@@ -88,4 +88,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Clase::class, 'id_profesor');
     }
+
+    /**
+     * Las reservaciones del usuario (para clientes).
+     */
+    public function reservaciones()
+    {
+        return $this->hasMany(Reservacion::class, 'id_usuario');
+    }
+
+    /**
+     * Las asistencias del usuario.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class, 'id_usuario');
+    }
 }

@@ -31,13 +31,13 @@ class ClaseFactory extends Factory
         return [
             'fecha' => fake()->dateTimeBetween('now', '+2 weeks'),
             'id_profesor' => User::factory(['rol' => 'Profesor']),
-            'tipo' => fake()->randomElement([
-                'Natación Libre',
-                'Aqua Aeróbicos',
-                'Aqua Zumba',
-                'Natación Terapéutica',
-                'Clases de Natación',
-                'Hidrogimnasia'
+            'nivel' => fake()->randomElement([
+                'Principiante',
+                'Intermedio',
+                'Avanzado',
+                'Competencia',
+                'Terapéutico',
+                'Infantil'
             ]),
             'lugares' => $lugares,
             'lugares_ocupados' => $lugaresOcupados,
