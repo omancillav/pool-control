@@ -23,16 +23,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('admin', function ($user){
+
+        Gate::define('admin', function ($user) {
             return $user->rol === 'Administrador';
         });
-        Gate::define('cliente', function ($user){
+        Gate::define('cliente', function ($user) {
             return $user->rol === 'Cliente';
         });
-        Gate::define('profesor', function ($user){
+        Gate::define('profesor', function ($user) {
             return $user->rol === 'Profesor';
         });
-        
+
         Route::aliasMiddleware('rol', VerificaRol::class);
         Route::aliasMiddleware('inactivity', CheckInactivity::class);
     }

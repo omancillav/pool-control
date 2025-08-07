@@ -1,38 +1,41 @@
-# Imagen base oficial de PHP con CLI
-FROM php:8.2-cli
+FROM php:8.2-apache
 
-# Establecer directorio de trabajo
-WORKDIR /var/www
+# Activar mod_rewrite y configurar Apache para Laravel
+RUN a2enmod rewrite
 
-# Instalar dependencias necesarias para Laravel y PostgreSQL
+# Copiar proyecto Laravel
+COPY . /var/www/html
+
+# Establecer permisos para carpetas necesarias
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Instalar dependencias del sistema y PHP
 RUN apt-get update && apt-get install -y \
-    libzip-dev unzip git zip curl libpq-dev libonig-dev autoconf \
+    libzip-dev unzip git zip curl libpq-dev libonig-dev \
     && docker-php-ext-install zip pdo pdo_pgsql mbstring bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalar Composer desde imagen oficial
+# Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar archivos del proyecto
-COPY . /var/www
+# Instalar dependencias del proyecto
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Ajustar permisos para Laravel
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+# Instalar AdminLTE y publicar assets (si no están ya instalados)
+RUN php artisan adminlte:install --force || true && \
+    php artisan vendor:publish --provider="JeroenNoten\\LaravelAdminLte\\AdminLteServiceProvider" --tag=assets --force || true
 
-# Instalar dependencias del proyecto y AdminLTE
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
-    composer require jeroennoten/laravel-adminlte && \
-    php artisan adminlte:install || echo "AdminLTE ya instalado"
+# Configurar Apache para servir la carpeta public/ de Laravel
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
+    echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Exponer puerto
-EXPOSE 8080
+EXPOSE 80
 
-# Comando por defecto: migra, limpia caches y arranca servidor
+# Ejecutar comandos Laravel antes de arrancar Apache
 CMD php artisan migrate --force && \
-    php artisan config:clear && \
-    php artisan cache:clear && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
-    php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+    apache2-foreground
