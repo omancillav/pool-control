@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ReservacionController;
+use App\Http\Controllers\AsistenciaController;
 
 Route::get('/', function () {
     return view('landing');
@@ -111,3 +112,28 @@ Route::get('/reservaciones/gestion', [ReservacionController::class, 'gestion'])
 Route::delete('/reservaciones/admin/{id}', [ReservacionController::class, 'cancelarAdmin'])
     ->name('reservaciones.cancelar-admin')
     ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
+
+// Rutas para Asistencias
+// Para clientes - ver sus asistencias
+Route::get('/asistencias/mis-asistencias', [AsistenciaController::class, 'misAsistencias'])
+    ->name('asistencias.mis-asistencias')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+
+// Para todos los usuarios - ver asistencias (según rol)
+Route::get('/asistencias', [AsistenciaController::class, 'index'])
+    ->name('asistencias.index')
+    ->middleware(['auth', 'inactivity']);
+
+// Para administradores y profesores - gestión de asistencias
+Route::get('/asistencias/gestion', [AsistenciaController::class, 'gestion'])
+    ->name('asistencias.gestion')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
+Route::get('/asistencias/marcar/{claseId}', [AsistenciaController::class, 'marcarAsistencia'])
+    ->name('asistencias.marcar')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
+Route::post('/asistencias/guardar/{claseId}', [AsistenciaController::class, 'guardarAsistencias'])
+    ->name('asistencias.guardar')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
+Route::get('/asistencias/{id}', [AsistenciaController::class, 'show'])
+    ->name('asistencias.show')
+    ->middleware(['auth', 'inactivity']);

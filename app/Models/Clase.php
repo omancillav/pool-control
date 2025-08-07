@@ -50,4 +50,12 @@ class Clase extends Model
     {
         return $this->hasMany(Reservacion::class, 'id_clase');
     }
+
+    /**
+     * Las asistencias de la clase.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class, 'id_clase');
+    }
 }

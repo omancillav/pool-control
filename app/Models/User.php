@@ -96,4 +96,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservacion::class, 'id_usuario');
     }
+
+    /**
+     * Las asistencias del usuario.
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class, 'id_usuario');
+    }
 }
