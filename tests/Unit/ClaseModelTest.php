@@ -19,7 +19,7 @@ class ClaseModelTest extends TestCase
         $clase = Clase::factory()->create([
             'fecha' => Carbon::today(),
             'id_profesor' => $profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_ocupados' => 5,
             'lugares_disponibles' => 10
@@ -27,7 +27,7 @@ class ClaseModelTest extends TestCase
 
         $this->assertDatabaseHas('clases', [
             'id_profesor' => $profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_ocupados' => 5,
             'lugares_disponibles' => 10
@@ -100,7 +100,7 @@ class ClaseModelTest extends TestCase
     public function it_has_correct_fillable_attributes()
     {
         $clase = new Clase();
-        $expected = ['fecha', 'id_profesor', 'tipo', 'lugares', 'lugares_ocupados', 'lugares_disponibles'];
+        $expected = ['fecha', 'id_profesor', 'nivel', 'lugares', 'lugares_ocupados', 'lugares_disponibles'];
         
         $this->assertEquals($expected, $clase->getFillable());
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->date('fecha');
             $table->unsignedBigInteger('id_profesor');
-            $table->string('tipo');
+            $table->string('nivel');
             $table->integer('lugares');
             $table->integer('lugares_ocupados');
             $table->integer('lugares_disponibles');

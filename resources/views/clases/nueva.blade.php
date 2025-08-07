@@ -3,27 +3,10 @@
 @section('title', 'Nueva Clase')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/panel.css') }}">            <!-- Nivel -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nivel">Nivel (*)</label>
-                    <select class="form-control @error('nivel') is-invalid @enderror"
-                        id="nivel" name="nivel"
-                        aria-describedby="nivel-error"
-                        title="Seleccione el nivel de la clase de natación">
-                        <option value="">Seleccionar nivel</option>
-                        <option value="Principiante" {{ old('nivel') == 'Principiante' ? 'selected' : '' }}>Principiante</option>
-                        <option value="Intermedio" {{ old('nivel') == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
-                        <option value="Avanzado" {{ old('nivel') == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
-                        <option value="Competencia" {{ old('nivel') == 'Competencia' ? 'selected' : '' }}>Competencia</option>
-                        <option value="Terapéutico" {{ old('nivel') == 'Terapéutico' ? 'selected' : '' }}>Terapéutico</option>
-                        <option value="Infantil" {{ old('nivel') == 'Infantil' ? 'selected' : '' }}>Infantil</option>
-                    </select>
-                    @error('nivel')
-                    <div class="invalid-feedback" id="nivel-error">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>ush('js')
+<link rel="stylesheet" href="{{ asset('css/panel.css') }}">
+@endsection
+
+@push('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
@@ -152,19 +135,25 @@
                 </div>
             </div>
 
-            <!-- Tipo -->
+            <!-- Nivel -->
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label for="tipo">Tipo (*)</label>
-                    <input type="text" class="form-control @error('tipo') is-invalid @enderror"
-                        id="tipo" name="tipo"
-                        value="{{ old('tipo') }}"
-                        placeholder="Ej: Presencial, Virtual"
+                    <label for="nivel">Nivel (*)</label>
+                    <select class="form-control @error('nivel') is-invalid @enderror"
+                        id="nivel" name="nivel"
                         required
-                        aria-describedby="tipo-error"
-                        title="Ingrese el tipo de clase">
-                    @error('tipo')
-                    <div class="invalid-feedback" id="tipo-error">{{ $message }}</div>
+                        aria-describedby="nivel-error"
+                        title="Seleccione el nivel de la clase de natación">
+                        <option value="">Seleccionar nivel</option>
+                        <option value="Principiante" {{ old('nivel') == 'Principiante' ? 'selected' : '' }}>Principiante</option>
+                        <option value="Intermedio" {{ old('nivel') == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
+                        <option value="Avanzado" {{ old('nivel') == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                        <option value="Competencia" {{ old('nivel') == 'Competencia' ? 'selected' : '' }}>Competencia</option>
+                        <option value="Terapéutico" {{ old('nivel') == 'Terapéutico' ? 'selected' : '' }}>Terapéutico</option>
+                        <option value="Infantil" {{ old('nivel') == 'Infantil' ? 'selected' : '' }}>Infantil</option>
+                    </select>
+                    @error('nivel')
+                    <div class="invalid-feedback" id="nivel-error">{{ $message }}</div>
                     @enderror
                 </div>
             </div>

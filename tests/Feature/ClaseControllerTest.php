@@ -48,7 +48,7 @@ class ClaseControllerTest extends TestCase
         $response = $this->actingAs($this->admin)->post('/clases/store', [
             'fecha' => Carbon::tomorrow()->format('Y-m-d'),
             'id_profesor' => $profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_ocupados' => 0,
             'lugares_disponibles' => 15
@@ -57,7 +57,7 @@ class ClaseControllerTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseHas('clases', [
             'id_profesor' => $profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_disponibles' => 15
         ]);
@@ -69,7 +69,7 @@ class ClaseControllerTest extends TestCase
         $response = $this->actingAs($this->profesor)->post('/clases/store', [
             'fecha' => Carbon::tomorrow()->format('Y-m-d'),
             'id_profesor' => $this->profesor->id,
-            'tipo' => 'Natación',
+            'nivel' => 'Intermedio',
             'lugares' => 10,
             'lugares_ocupados' => 0,
             'lugares_disponibles' => 10
@@ -78,7 +78,7 @@ class ClaseControllerTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseHas('clases', [
             'id_profesor' => $this->profesor->id,
-            'tipo' => 'Natación',
+            'nivel' => 'Intermedio',
             'lugares' => 10
         ]);
     }
@@ -89,7 +89,7 @@ class ClaseControllerTest extends TestCase
         $response = $this->actingAs($this->cliente)->post('/clases/store', [
             'fecha' => Carbon::tomorrow()->format('Y-m-d'),
             'id_profesor' => $this->profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_ocupados' => 0,
             'lugares_disponibles' => 15
@@ -103,14 +103,14 @@ class ClaseControllerTest extends TestCase
     {
         $clase = Clase::factory()->create([
             'id_profesor' => $this->profesor->id,
-            'tipo' => 'Natación',
+            'nivel' => 'Intermedio',
             'lugares' => 10
         ]);
 
         $response = $this->actingAs($this->admin)->put("/clases/{$clase->id}", [
             'fecha' => $clase->fecha->format('Y-m-d'),
             'id_profesor' => $this->profesor->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15,
             'lugares_ocupados' => 5,
             'lugares_disponibles' => 10
@@ -119,7 +119,7 @@ class ClaseControllerTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseHas('clases', [
             'id' => $clase->id,
-            'tipo' => 'Aqua Aeróbicos',
+            'nivel' => 'Avanzado',
             'lugares' => 15
         ]);
     }
@@ -175,7 +175,7 @@ class ClaseControllerTest extends TestCase
         $response = $this->actingAs($this->admin)->post('/clases/store', [
             'fecha' => '',
             'id_profesor' => '',
-            'tipo' => '',
+            'nivel' => '',
             'lugares' => -1,
             'lugares_ocupados' => '',
             'lugares_disponibles' => ''
@@ -184,7 +184,7 @@ class ClaseControllerTest extends TestCase
         $response->assertSessionHasErrors([
             'fecha',
             'id_profesor',
-            'tipo',
+            'nivel',
             'lugares'
         ]);
     }
