@@ -67,21 +67,4 @@ class Clase extends Model
         return $this->hasManyThrough(Pago::class, Reservacion::class, 'id_clase', 'id_reservacion');
     }
 
-    /**
-     * Asignar precio automáticamente basado en el nivel
-     */
-    public function asignarPrecioPorNivel()
-    {
-        $precios = Pago::getPreciosPorNivel();
-        $this->precio = $precios[$this->nivel] ?? 250.00; // Precio por defecto si el nivel no existe
-        return $this;
-    }
-
-    /**
-     * Obtener el precio formateado
-     */
-    public function getPrecioFormateadoAttribute()
-    {
-        return '$' . number_format($this->precio, 2) . ' MXN';
-    }
 }

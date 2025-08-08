@@ -63,13 +63,12 @@ class ClaseController extends Controller
             'lugares_disponibles' => 'required|integer|min:0',
         ]);
 
-        // Crear la clase y asignar precio automáticamente
+        // Crear la clase
         $clase = new Clase($validated);
-        $clase->asignarPrecioPorNivel();
         $clase->save();
 
         return redirect()->route('clases.list')
-            ->with('success', 'Clase registrada correctamente con precio $' . number_format($clase->precio, 2) . ' MXN.');
+            ->with('success', 'Clase registrada correctamente.');
     }
 
     public function edit($id)
@@ -94,19 +93,9 @@ class ClaseController extends Controller
         $clase = Clase::findOrFail($id);
         $nivelAnterior = $clase->nivel;
         $clase->fill($validated);
-        
-        // Si cambió el nivel, actualizar el precio
-        if ($clase->isDirty('nivel')) {
-            $precioAnterior = $clase->precio;
-            $clase->asignarPrecioPorNivel();
-            $mensaje = "Clase actualizada correctamente. Precio actualizado de $" . number_format($precioAnterior, 2) . " a $" . number_format($clase->precio, 2) . " MXN.";
-        } else {
-            $mensaje = 'Clase actualizada correctamente.';
-        }
-        
         $clase->save();
 
-        return redirect()->route('clases.list')->with('success', $mensaje);
+        return redirect()->route('clases.list')->with('success', 'Clase actualizada correctamente.');
     }
 
     public function destroy($id)
