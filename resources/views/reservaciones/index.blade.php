@@ -4,6 +4,28 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/panel.css') }}">
+<style>
+.badge-lg {
+  font-size: 1.1em;
+  padding: 0.5em 0.8em;
+}
+
+.alert h5, .alert h6 {
+  margin-bottom: 1rem;
+}
+
+.alert .row {
+  align-items: center;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+}
+</style>
 @endsection
 
 @section('content')
@@ -42,6 +64,35 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  @endif
+
+  @if(Auth::user()->rol === 'Cliente')
+    @if(!$membresia)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <h5><i class="fas fa-exclamation-triangle"></i> Membresía Requerida</h5>
+      <p class="mb-3">Para poder reservar clases, primero necesitas adquirir una membresía. Nuestros paquetes incluyen múltiples clases a precios accesibles.</p>
+      <a href="{{ route('membresias.comprar') }}" class="btn btn-primary">
+        <i class="fas fa-shopping-cart"></i> Comprar Membresía
+      </a>
+    </div>
+    @elseif($membresia->clases_disponibles <= 0)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <h5><i class="fas fa-clock"></i> Sin Clases Disponibles</h5>
+      <p class="mb-3">Has utilizado todas las clases de tu membresía actual. Adquiere un nuevo paquete para continuar reservando clases.</p>
+      <div class="row">
+        <div class="col-auto">
+          <a href="{{ route('membresias.comprar') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Renovar Membresía
+          </a>
+        </div>
+        <div class="col-auto">
+          <small class="text-muted">
+            Clases utilizadas: {{ $membresia->clases_ocupadas }}/{{ $membresia->clases_adquiridas }}
+          </small>
+        </div>
+      </div>
+    </div>
+    @endif
   @endif
 
   <div class="row">
@@ -84,68 +135,36 @@
           <td>{{ $clase->lugares }}</td>
           <td>
             @if($clase->lugares_disponibles > 0)
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-              data-target="#reservarModal{{ $clase->id }}">
-              <i class="fas fa-calendar-plus"></i> Reservar
-            </button>
+              @if(Auth::user()->rol === 'Cliente')
+                @if($membresia && $membresia->clases_disponibles > 0)
+                <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
+                  @csrf
+                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-credit-card"></i> Reservar
+                  </button>
+                </form>
+                @else
+                <button class="btn btn-secondary btn-sm" disabled title="Necesitas una membresía activa">
+                  <i class="fas fa-lock"></i> Reservar
+                </button>
+                @endif
+              @else
+                <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
+                  @csrf
+                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-credit-card"></i> Reservar
+                  </button>
+                </form>
+              @endif
             @else
             <span class="text-muted">Sin lugares</span>
             @endif
           </td>
-        </tr>
-
-        <!-- Modal para reservar -->
-        <div class="modal fade" id="reservarModal{{ $clase->id }}" tabindex="-1" role="dialog"
-          aria-labelledby="reservarModalLabel{{ $clase->id }}" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="reservarModalLabel{{ $clase->id }}">
-                  Reservar Clase - {{ $clase->nivel }}
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form action="{{ route('reservaciones.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($clase->fecha)->format('d/m/Y') }}
-                    </div>
-                    <div class="col-md-6">
-                      <strong>Profesor:</strong> {{ $clase->profesor->name }}
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-6">
-                      <strong>Nivel:</strong> {{ $clase->nivel }}
-                    </div>
-                    <div class="col-md-6">
-                      <strong>Lugares disponibles:</strong> {{ $clase->lugares_disponibles }}
-                    </div>
-                  </div>
-
-                  <div class="form-group mt-3">
-                    <label for="notas{{ $clase->id }}">Notas adicionales (opcional)</label>
-                    <textarea class="form-control" id="notas{{ $clase->id }}" name="notas"
-                      rows="3" placeholder="Escribe cualquier nota adicional para tu reservación..."></textarea>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Confirmar Reservación</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
         @empty
         <tr>
-          <td colspan="6" class="text-center">No hay clases disponibles para reservar en este momento.</td>
+          <td colspan="7" class="text-center">No hay clases disponibles para reservar en este momento.</td>
         </tr>
         @endforelse
       </tbody>

@@ -35,8 +35,8 @@ return new class extends Migration
         Schema::table('asistencias', function (Blueprint $table) {
             $table->dropUnique(['id_clase', 'id_usuario']);
             $table->dropColumn(['presente', 'observaciones', 'fecha_marcado']);
-            $table->unsignedBigInteger('id_profesor');
-            $table->unsignedBigInteger('id_membresia');
+            $table->unsignedBigInteger('id_profesor')->nullable();
+            $table->unsignedBigInteger('id_membresia')->nullable();
             $table->foreign('id_profesor')->references('id')->on('users');
             $table->foreign('id_membresia')->references('id')->on('membresias');
         });

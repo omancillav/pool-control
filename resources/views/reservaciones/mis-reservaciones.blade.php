@@ -66,6 +66,7 @@
           <th>Fecha Clase</th>
           <th>Nivel</th>
           <th>Profesor</th>
+          <th>Estado</th>
           <th>Fecha Reservación</th>
           <th>Notas</th>
           <th>Acciones</th>
@@ -77,6 +78,11 @@
           <td>{{ \Carbon\Carbon::parse($reservacion->clase->fecha)->format('d/m/Y') }}</td>
           <td>{{ $reservacion->clase->nivel }}</td>
           <td>{{ $reservacion->clase->profesor->name }}</td>
+          <td>
+            <span class="badge badge-success">
+              <i class="fas fa-check"></i> Confirmada
+            </span>
+          </td>
           <td>{{ $reservacion->created_at->format('d/m/Y H:i') }}</td>
           <td>
             @if($reservacion->notas)

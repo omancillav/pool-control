@@ -26,6 +26,15 @@ Route::get('/membresias', [MembresiaController::class, 'index'])
 Route::get('/membresias/lista', [MembresiaController::class, 'list'])
     ->name('membresias.list')
     ->middleware(['auth', 'inactivity', 'rol:Administrador,Cliente']);
+Route::get('/membresias/comprar', [MembresiaController::class, 'comprar'])
+    ->name('membresias.comprar')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::get('/membresias/mostrar-pago', [MembresiaController::class, 'mostrarPago'])
+    ->name('membresias.mostrar-pago')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::post('/membresias/procesar-compra', [MembresiaController::class, 'procesarCompra'])
+    ->name('membresias.procesar-compra')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
 Route::post('/membresias/store', [MembresiaController::class, 'store'])
     ->name('membresias.store')
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
@@ -34,6 +43,9 @@ Route::put('/membresias/{membresia}', [MembresiaController::class, 'update'])
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
 Route::delete('/membresias/{id}', [MembresiaController::class, 'destroy'])
     ->name('membresias.destroy')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador']);
+Route::patch('/membresias/pago/{id}/completar', [MembresiaController::class, 'marcarPagoCompletado'])
+    ->name('membresias.completar-pago')
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
 
 // Rutas para Usuarios
@@ -100,7 +112,7 @@ Route::get('/reservaciones/mis-reservaciones', [ReservacionController::class, 'm
     ->middleware(['auth', 'inactivity', 'rol:Cliente']);
 Route::post('/reservaciones/store', [ReservacionController::class, 'store'])
     ->name('reservaciones.store')
-    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+    ->middleware(['auth', 'inactivity', 'rol:Cliente', 'verificar.membresia']);
 Route::delete('/reservaciones/{id}', [ReservacionController::class, 'cancelar'])
     ->name('reservaciones.cancelar')
     ->middleware(['auth', 'inactivity', 'rol:Cliente']);

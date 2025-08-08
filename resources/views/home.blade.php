@@ -13,7 +13,7 @@
             @include('dashboards.admin', compact('totalUsuarios', 'totalMembresias', 'totalClases'))
         @elseif(Auth::user()->rol == 'Cliente')
             {{-- Client Dashboard --}}
-            @include('dashboards.cliente', compact('membresia', 'clases'))
+            @include('dashboards.cliente', compact('membresia', 'clases', 'reservaciones'))
         @elseif(Auth::user()->rol == 'Profesor')
             {{-- Professor Dashboard --}}
             @include('dashboards.profesor', compact('clasesImpartidas'))

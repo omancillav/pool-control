@@ -4,55 +4,58 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
-class Asistencia extends Model
+class Pago extends Model
 {
     use HasFactory, LogsActivity;
 
-    protected $table = 'asistencias';
-
     protected $fillable = [
-        'id_clase',
         'id_usuario',
-        'presente',
-        'observaciones',
-        'fecha_marcado',
-    ];
-
-    protected $casts = [
-        'presente' => 'boolean',
-        'fecha_marcado' => 'datetime',
+        'id_membresia',
+        'monto',
+        'fecha',
+        'metodo_pago',
+        'estado',
+        'numero_transaccion',
+        'notas'
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logFillable()
-            ->useLogName('Asistencia')
+            ->useLogName('Pago')
             ->setDescriptionForEvent(fn(string $eventName) => "Se ha " . match ($eventName) {
                 'created' => 'registrado',
                 'updated' => 'actualizado',
                 'deleted' => 'eliminado',
                 default => $eventName
-            } . " una asistencia");
+            } . " un pago");
     }
 
     /**
-     * Get the clase that owns the Asistencia
+     * Relación con el modelo User
      */
-    public function clase(): BelongsTo
-    {
-        return $this->belongsTo(Clase::class, 'id_clase');
-    }
-
-    /**
-     * Get the usuario that owns the Asistencia
-     */
-    public function usuario(): BelongsTo
+    public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    /**
+     * Relación con el modelo Membresia (para pagos de membresías)
+     */
+    public function membresia()
+    {
+        return $this->belongsTo(Membresia::class, 'id_membresia');
+    }
+
+    /**
+     * Generar número de transacción simulado
+     */
+    public static function generarNumeroTransaccion()
+    {
+        return 'TXN-' . strtoupper(uniqid()) . '-' . rand(1000, 9999);
     }
 }
