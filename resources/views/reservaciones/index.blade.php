@@ -116,7 +116,6 @@
           <th>Fecha</th>
           <th>Nivel</th>
           <th>Profesor</th>
-          <th>Precio</th>
           <th>Lugares Disponibles</th>
           <th>Total Lugares</th>
           <th>Acciones</th>
@@ -128,7 +127,6 @@
           <td>{{ \Carbon\Carbon::parse($clase->fecha)->format('d/m/Y') }}</td>
           <td>{{ $clase->nivel }}</td>
           <td>{{ $clase->profesor->name }}</td>
-          <td><strong>${{ number_format($clase->precio, 2) }}</strong></td>
           <td>
             <span class="badge badge-{{ $clase->lugares_disponibles > 0 ? 'success' : 'danger' }}">
               {{ $clase->lugares_disponibles }}

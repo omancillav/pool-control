@@ -10,7 +10,6 @@ use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ReservacionController;
 use App\Http\Controllers\AsistenciaController;
-use App\Http\Controllers\PagoController;
 
 Route::get('/', function () {
     return view('landing');
@@ -29,6 +28,9 @@ Route::get('/membresias/lista', [MembresiaController::class, 'list'])
     ->middleware(['auth', 'inactivity', 'rol:Administrador,Cliente']);
 Route::get('/membresias/comprar', [MembresiaController::class, 'comprar'])
     ->name('membresias.comprar')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::get('/membresias/mostrar-pago', [MembresiaController::class, 'mostrarPago'])
+    ->name('membresias.mostrar-pago')
     ->middleware(['auth', 'inactivity', 'rol:Cliente']);
 Route::post('/membresias/procesar-compra', [MembresiaController::class, 'procesarCompra'])
     ->name('membresias.procesar-compra')
@@ -144,23 +146,3 @@ Route::post('/asistencias/guardar/{claseId}', [AsistenciaController::class, 'gua
 Route::get('/asistencias/{id}', [AsistenciaController::class, 'show'])
     ->name('asistencias.show')
     ->middleware(['auth', 'inactivity']);
-
-// Rutas para Pagos
-// Para clientes - procesar pagos
-Route::get('/pagos/mostrar/{id_clase}', [PagoController::class, 'mostrarPago'])
-    ->name('pagos.mostrar')
-    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
-Route::post('/pagos/procesar/{id_clase}', [PagoController::class, 'procesarPago'])
-    ->name('pagos.procesar')
-    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
-
-// Para administradores y profesores - gestión de pagos
-Route::get('/pagos', [PagoController::class, 'index'])
-    ->name('pagos.index')
-    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
-Route::patch('/pagos/{id}/marcar-completado', [PagoController::class, 'marcarCompletado'])
-    ->name('pagos.marcar-completado')
-    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);
-Route::delete('/pagos/{id}/cancelar', [PagoController::class, 'cancelar'])
-    ->name('pagos.cancelar')
-    ->middleware(['auth', 'inactivity', 'rol:Administrador,Profesor']);

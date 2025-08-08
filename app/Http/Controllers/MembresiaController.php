@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Membresia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MembresiaController extends Controller
 {
@@ -104,83 +105,156 @@ class MembresiaController extends Controller
     {
         $user = Auth::user();
         $membresiaActual = Membresia::where('id_usuario', $user->id)->first();
-        
+
         // Definir paquetes de membresías disponibles
-        $paquetes = [
-            [
-                'nombre' => 'Paquete Básico',
-                'clases' => 4,
-                'precio' => 80,
-                'descripcion' => 'Ideal para principiantes',
-                'beneficios' => ['4 clases', 'Acceso a nivel básico', 'Válido por 1 mes']
-            ],
-            [
-                'nombre' => 'Paquete Intermedio',
-                'clases' => 8,
-                'precio' => 140,
-                'descripcion' => 'Perfecto para practicantes regulares',
-                'beneficios' => ['8 clases', 'Acceso a todos los niveles', 'Válido por 2 meses']
-            ],
-            [
-                'nombre' => 'Paquete Premium',
-                'clases' => 12,
-                'precio' => 180,
-                'descripcion' => 'La mejor opción para nadadores dedicados',
-                'beneficios' => ['12 clases', 'Acceso prioritario', 'Válido por 3 meses']
-            ]
-        ];
-        
+        $paquetesInfo = $this->getPaquetesInfo();
+        $paquetes = array_values($paquetesInfo); // Convertir a array numérico para la vista
+
         return view('membresias.comprar', compact('paquetes', 'membresiaActual'));
     }
 
     /**
-     * Procesar la compra de una membresía
+     * Mostrar la vista de pago antes de procesar la compra de membresía
+     */
+    public function mostrarPago(Request $request)
+    {
+        $validated = $request->validate([
+            'paquete' => 'required|in:basico,intermedio,premium'
+        ]);
+
+        $user = Auth::user();
+
+        // Obtener información de paquetes
+        $paquetesInfo = $this->getPaquetesInfo();
+
+        $paquete = $paquetesInfo[$validated['paquete']];
+        $tipoPaquete = $validated['paquete'];
+
+        return view('membresias.mostrar-pago', compact('paquete', 'tipoPaquete'));
+    }
+
+    /**
+     * Procesar la compra de una membresía con pago
      */
     public function procesarCompra(Request $request)
     {
         $validated = $request->validate([
             'paquete' => 'required|in:basico,intermedio,premium',
-            'metodo_pago' => 'required|in:online,fisico'
+            'metodo_pago' => 'required|in:online,fisico',
+            'notas' => 'nullable|string|max:500'
         ]);
 
         $user = Auth::user();
-        
-        // Definir los paquetes
-        $paquetesInfo = [
-            'basico' => ['clases' => 4, 'precio' => 80],
-            'intermedio' => ['clases' => 8, 'precio' => 140],
-            'premium' => ['clases' => 12, 'precio' => 180]
-        ];
-        
+
+        // Obtener información de paquetes
+        $paquetesInfo = $this->getPaquetesInfo();
+
         $paqueteSeleccionado = $paquetesInfo[$validated['paquete']];
-        
-        // Verificar si el usuario ya tiene una membresía
-        $membresiaExistente = Membresia::where('id_usuario', $user->id)->first();
-        
-        if ($membresiaExistente) {
-            // Si ya tiene membresía, agregar clases a las disponibles
-            $membresiaExistente->update([
-                'clases_adquiridas' => $membresiaExistente->clases_adquiridas + $paqueteSeleccionado['clases'],
-                'clases_disponibles' => $membresiaExistente->clases_disponibles + $paqueteSeleccionado['clases']
-            ]);
-            $mensaje = 'Membresía renovada exitosamente. Se han agregado ' . $paqueteSeleccionado['clases'] . ' clases a tu cuenta.';
-        } else {
-            // Crear nueva membresía
-            Membresia::create([
-                'id_usuario' => $user->id,
-                'clases_adquiridas' => $paqueteSeleccionado['clases'],
-                'clases_disponibles' => $paqueteSeleccionado['clases'],
-                'clases_ocupadas' => 0
-            ]);
-            $mensaje = 'Membresía adquirida exitosamente. Ahora puedes reservar clases.';
+
+        // Simular procesamiento realista para pago online
+        if ($validated['metodo_pago'] === 'online') {
+            // Simular tiempo de procesamiento
+            sleep(2);
+
+            // Simular validación de tarjeta (siempre exitosa para la simulación)
+            $transaccionExitosa = true;
+
+            if (!$transaccionExitosa) {
+                return redirect()->back()
+                    ->with('error', 'Error en el procesamiento del pago. Por favor, verifica tus datos e intenta nuevamente.');
+            }
         }
 
+        // Usar transacción de base de datos para seguridad
+        DB::transaction(function () use ($user, $paqueteSeleccionado, $validated) {
+            // Verificar si el usuario ya tiene una membresía
+            $membresiaExistente = Membresia::where('id_usuario', $user->id)->first();
+
+            if ($membresiaExistente) {
+                // Si ya tiene membresía, agregar clases a las disponibles
+                $membresiaExistente->update([
+                    'clases_adquiridas' => $membresiaExistente->clases_adquiridas + $paqueteSeleccionado['clases'],
+                    'clases_disponibles' => $membresiaExistente->clases_disponibles + $paqueteSeleccionado['clases']
+                ]);
+                $membresia = $membresiaExistente;
+            } else {
+                // Crear nueva membresía
+                $membresia = Membresia::create([
+                    'id_usuario' => $user->id,
+                    'clases_adquiridas' => $paqueteSeleccionado['clases'],
+                    'clases_disponibles' => $paqueteSeleccionado['clases'],
+                    'clases_ocupadas' => 0
+                ]);
+            }
+
+            // Crear el registro de pago
+            $estadoPago = $validated['metodo_pago'] === 'online' ? 'completado' : 'pendiente';
+            $numeroTransaccion = $validated['metodo_pago'] === 'online'
+                ? $this->generarNumeroTransaccionRealista()
+                : null;
+
+            \App\Models\Pago::create([
+                'id_usuario' => $user->id,
+                'id_membresia' => $membresia->id,
+                'monto' => $paqueteSeleccionado['precio'],
+                'fecha' => now()->toDateString(),
+                'metodo_pago' => $validated['metodo_pago'],
+                'estado' => $estadoPago,
+                'numero_transaccion' => $numeroTransaccion,
+                'notas' => $validated['notas']
+            ]);
+        });
+
+        // Mensajes más realistas
         if ($validated['metodo_pago'] === 'online') {
             return redirect()->route('reservaciones.index')
-                ->with('success', $mensaje . ' Tu pago ha sido procesado correctamente.');
+                ->with('success', '¡Pago procesado exitosamente! Tu membresía ha sido activada. Recibirás un email de confirmación en unos minutos.');
         } else {
             return redirect()->route('reservaciones.index')
-                ->with('success', $mensaje . ' Recuerda realizar el pago antes de tu primera clase.');
+                ->with('success', 'Membresía reservada exitosamente. Recuerda realizar el pago para activar completamente tu membresía.');
         }
+    }
+
+    /**
+     * Generar número de transacción que se ve más realista
+     */
+    private function generarNumeroTransaccionRealista()
+    {
+        $prefijos = ['MEM', 'PAY', 'PYM', 'TXN'];
+        $prefijo = $prefijos[array_rand($prefijos)];
+        $timestamp = now()->format('YmdHis');
+        $random = str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT);
+
+        return $prefijo . '-' . $timestamp . '-' . $random;
+    }
+
+    /**
+     * Obtener la información de todos los paquetes de membresía
+     */
+    private function getPaquetesInfo()
+    {
+        return [
+            'basico' => [
+                'nombre' => 'Paquete Básico',
+                'clases' => 4,
+                'precio' => 500.00,
+                'descripcion' => 'Ideal para principiantes',
+                'beneficios' => ['4 clases', 'Acceso a nivel básico', 'Válido por 1 mes']
+            ],
+            'intermedio' => [
+                'nombre' => 'Paquete Intermedio',
+                'clases' => 8,
+                'precio' => 750.00,
+                'descripcion' => 'Perfecto para practicantes regulares',
+                'beneficios' => ['8 clases', 'Acceso a todos los niveles', 'Válido por 2 meses']
+            ],
+            'premium' => [
+                'nombre' => 'Paquete Premium',
+                'clases' => 12,
+                'precio' => 1000.00,
+                'descripcion' => 'La mejor opción para nadadores dedicados',
+                'beneficios' => ['12 clases', 'Acceso prioritario', 'Válido por 3 meses']
+            ]
+        ];
     }
 }

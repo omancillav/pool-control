@@ -48,7 +48,7 @@ class ReservacionController extends Controller
     {
         $search = $request->input('search');
 
-        $reservaciones = Reservacion::with(['clase.profesor', 'pago'])
+        $reservaciones = Reservacion::with(['clase.profesor'])
             ->where('id_usuario', Auth::id())
             ->when($search, function ($query, $search) {
                 return $query->whereHas('clase', function ($q) use ($search) {
@@ -65,7 +65,7 @@ class ReservacionController extends Controller
     }
 
     /**
-     * Redirigir al proceso de pago para crear una reservación
+     * Crear una nueva reservación
      */
     public function store(Request $request)
     {
@@ -111,8 +111,30 @@ class ReservacionController extends Controller
             }
         }
 
-        // Redirigir al proceso de pago
-        return redirect()->route('pagos.mostrar', $validated['id_clase']);
+        // Crear la reservación directamente
+        DB::transaction(function () use ($validated, $user) {
+            // Crear la reservación
+            Reservacion::create([
+                'id_clase' => $validated['id_clase'],
+                'id_usuario' => $user->id,
+            ]);
+
+            // Actualizar lugares disponibles
+            $clase = Clase::find($validated['id_clase']);
+            $clase->decrement('lugares_disponibles');
+
+            // Si es cliente, descontar de su membresía
+            if ($user->rol === 'Cliente') {
+                $membresia = Membresia::where('id_usuario', $user->id)->first();
+                if ($membresia) {
+                    $membresia->decrement('clases_disponibles');
+                    $membresia->increment('clases_ocupadas');
+                }
+            }
+        });
+
+        return redirect()->route('reservaciones.mis-reservaciones')
+            ->with('success', 'Reservación creada exitosamente.');
     }
 
     /**

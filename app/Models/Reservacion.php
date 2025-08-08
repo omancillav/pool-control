@@ -47,12 +47,4 @@ class Reservacion extends Model
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
-
-    /**
-     * Relación con el pago de esta reservación
-     */
-    public function pago()
-    {
-        return $this->hasOne(Pago::class, 'id_reservacion');
-    }
 }

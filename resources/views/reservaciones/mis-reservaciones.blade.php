@@ -66,8 +66,7 @@
           <th>Fecha Clase</th>
           <th>Nivel</th>
           <th>Profesor</th>
-          <th>Precio</th>
-          <th>Estado Pago</th>
+          <th>Estado</th>
           <th>Fecha Reservación</th>
           <th>Notas</th>
           <th>Acciones</th>
@@ -79,35 +78,10 @@
           <td>{{ \Carbon\Carbon::parse($reservacion->clase->fecha)->format('d/m/Y') }}</td>
           <td>{{ $reservacion->clase->nivel }}</td>
           <td>{{ $reservacion->clase->profesor->name }}</td>
-          <td><strong>${{ number_format($reservacion->clase->precio, 2) }}</strong></td>
           <td>
-            @if($reservacion->pago)
-              @switch($reservacion->pago->estado)
-                @case('completado')
-                  <span class="badge badge-success">
-                    <i class="fas fa-check"></i> Pagado
-                    @if($reservacion->pago->metodo_pago == 'online')
-                      (Online)
-                    @else
-                      (Físico)
-                    @endif
-                  </span>
-                  @break
-                @case('pendiente')
-                  <span class="badge badge-warning">
-                    <i class="fas fa-clock"></i> Pendiente 
-                    @if($reservacion->pago->metodo_pago == 'fisico')
-                      (Pago físico)
-                    @endif
-                  </span>
-                  @break
-                @case('cancelado')
-                  <span class="badge badge-danger"><i class="fas fa-times"></i> Cancelado</span>
-                  @break
-              @endswitch
-            @else
-              <span class="badge badge-secondary">Sin pago</span>
-            @endif
+            <span class="badge badge-success">
+              <i class="fas fa-check"></i> Confirmada
+            </span>
           </td>
           <td>{{ $reservacion->created_at->format('d/m/Y H:i') }}</td>
           <td>

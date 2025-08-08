@@ -17,7 +17,6 @@ class Clase extends Model
         'lugares',
         'lugares_ocupados',
         'lugares_disponibles',
-        'precio',
     ];
       public function getActivitylogOptions(): LogOptions
     {
