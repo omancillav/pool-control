@@ -36,6 +36,14 @@ class Membresia extends Model
     }
 
     /**
+     * Relación con los pagos de esta membresía
+     */
+    public function pago()
+    {
+        return $this->hasOne(Pago::class, 'id_membresia');
+    }
+
+    /**
      * Verificar si la membresía tiene clases disponibles
      */
     public function tieneClasesDisponibles()

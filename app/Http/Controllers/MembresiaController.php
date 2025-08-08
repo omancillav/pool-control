@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Membresia;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,7 @@ class MembresiaController extends Controller
         $usuarios = User::all();
         $search = $request->input('search');
 
-        $membresias = Membresia::with('usuario')
+        $membresias = Membresia::with(['usuario', 'pago'])
             ->when($search, function ($query, $search) {
                 return $query->where('id_usuario', 'like', "%{$search}%")
                     ->orWhere('clases_adquiridas', 'like', "%{$search}%")
@@ -278,5 +279,27 @@ class MembresiaController extends Controller
                 'beneficios' => ['12 clases', 'Acceso prioritario', 'Válido por 3 meses']
             ]
         ];
+    }
+
+    /**
+     * Marcar un pago físico como completado
+     */
+    public function marcarPagoCompletado($pagoId)
+    {
+        $pago = Pago::findOrFail($pagoId);
+        
+        // Verificar que sea un pago físico y esté pendiente
+        if ($pago->metodo_pago !== 'fisico' || $pago->estado !== 'pendiente') {
+            return redirect()->back()
+                ->with('error', 'Este pago no puede ser marcado como completado.');
+        }
+
+        $pago->update([
+            'estado' => 'completado',
+            'fecha' => now()
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Pago marcado como completado exitosamente.');
     }
 }

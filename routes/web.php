@@ -44,6 +44,9 @@ Route::put('/membresias/{membresia}', [MembresiaController::class, 'update'])
 Route::delete('/membresias/{id}', [MembresiaController::class, 'destroy'])
     ->name('membresias.destroy')
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
+Route::patch('/membresias/pago/{id}/completar', [MembresiaController::class, 'marcarPagoCompletado'])
+    ->name('membresias.completar-pago')
+    ->middleware(['auth', 'inactivity', 'rol:Administrador']);
 
 // Rutas para Usuarios
 Route::get('/usuarios', [UserController::class, 'index'])

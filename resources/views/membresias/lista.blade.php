@@ -55,6 +55,9 @@
                                             <th>Clases Adquiridas</th>
                                             <th>Clases Disponibles</th>
                                             <th>Clases Ocupadas</th>
+                                            <th>Estado de Pago</th>
+                                            <th>Método de Pago</th>
+                                            <th>Monto</th>
                                             <th>Creado el</th>
                                             @if(auth()->check() && auth()->user()->rol !== 'Cliente')
                                                 <th>Opciones</th>
@@ -69,10 +72,65 @@
                                                 <td>{{ $membresia->clases_adquiridas }}</td>
                                                 <td>{{ $membresia->clases_disponibles }}</td>
                                                 <td>{{ $membresia->clases_ocupadas }}</td>
+                                                <td>
+                                                    @if($membresia->pago)
+                                                        @switch($membresia->pago->estado)
+                                                            @case('completado')
+                                                                <span class="badge badge-success">
+                                                                    <i class="fas fa-check"></i> Completado
+                                                                </span>
+                                                                @break
+                                                            @case('pendiente')
+                                                                <span class="badge badge-warning">
+                                                                    <i class="fas fa-clock"></i> Pendiente
+                                                                </span>
+                                                                @break
+                                                            @case('cancelado')
+                                                                <span class="badge badge-danger">
+                                                                    <i class="fas fa-times"></i> Cancelado
+                                                                </span>
+                                                                @break
+                                                        @endswitch
+                                                    @else
+                                                        <span class="badge badge-secondary">Sin pago</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($membresia->pago)
+                                                        @if($membresia->pago->metodo_pago == 'online')
+                                                            <span class="badge badge-info">
+                                                                <i class="fas fa-credit-card"></i> Online
+                                                            </span>
+                                                        @else
+                                                            <span class="badge badge-primary">
+                                                                <i class="fas fa-money-bill"></i> Físico
+                                                            </span>
+                                                        @endif
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($membresia->pago)
+                                                        <strong>${{ number_format($membresia->pago->monto, 2) }}</strong>
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $membresia->created_at->format('d/m/Y') }}</td>
                                                 @if(auth()->check() && auth()->user()->rol !== 'Cliente')
                                                     <td>
                                                         <div class="btn-group" role="group" aria-label="Opciones">
+                                                            @if($membresia->pago && $membresia->pago->metodo_pago == 'fisico' && $membresia->pago->estado == 'pendiente')
+                                                                <form method="POST" action="{{ route('membresias.completar-pago', $membresia->pago->id) }}" style="display: inline;">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <button type="submit" class="btn btn-success btn-sm mr-2" title="Marcar pago como completado" 
+                                                                            onclick="return confirm('¿Marcar este pago como completado?')">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                             <button type="button" class="btn btn-edit mr-2" title="Editar"
                                                                 data-toggle="modal"
                                                                 data-target="#editMembresia{{ $membresia->id }}">
@@ -91,7 +149,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="7" class="text-center">No se encontraron resultados.</td>
+                                                <td colspan="10" class="text-center">No se encontraron resultados.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

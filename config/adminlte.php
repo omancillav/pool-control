@@ -332,7 +332,7 @@ return [
                     'text' => 'Nueva',
                     'route' => 'membresias.nueva',
                     'icon' => 'fas fa-plus',
-                    'can' => 'admin'
+                    'can' => 'nadie'
                 ],
             ],
         ],
