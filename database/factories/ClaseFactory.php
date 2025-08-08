@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Clase;
 use App\Models\User;
-use App\Models\Pago;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
 
@@ -39,10 +38,6 @@ class ClaseFactory extends Factory
             'Rehabilitación',
             'Infantil'
         ]);
-        
-        // Obtener precio basado en el nivel
-        $precios = Pago::getPreciosPorNivel();
-        $precio = $precios[$nivel] ?? 250.00;
 
         return [
             'fecha' => fake()->dateTimeBetween('now', '+2 weeks'),
@@ -51,7 +46,6 @@ class ClaseFactory extends Factory
             'lugares' => $lugares,
             'lugares_ocupados' => $lugaresOcupados,
             'lugares_disponibles' => $lugaresDisponibles,
-            'precio' => $precio,
         ];
     }
 
