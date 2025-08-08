@@ -33,5 +33,32 @@ class Membresia extends Model
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    /**
+     * Verificar si la membresía tiene clases disponibles
+     */
+    public function tieneClasesDisponibles()
+    {
+        return $this->clases_disponibles > 0;
+    }
+
+    /**
+     * Obtener el porcentaje de clases utilizadas
+     */
+    public function porcentajeUtilizado()
+    {
+        if ($this->clases_adquiridas == 0) {
+            return 0;
+        }
+        return round(($this->clases_ocupadas / $this->clases_adquiridas) * 100, 1);
+    }
+
+    /**
+     * Scope para membresías activas (con clases disponibles)
+     */
+    public function scopeActivas($query)
+    {
+        return $query->where('clases_disponibles', '>', 0);
     }   
 }

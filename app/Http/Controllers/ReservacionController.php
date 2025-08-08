@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservacion;
 use App\Models\Clase;
+use App\Models\Membresia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,14 @@ class ReservacionController extends Controller
             ->orderBy('fecha')
             ->paginate(10);
 
-        return view('reservaciones.index', compact('clases'));
+        // Verificar membresía del usuario si es cliente
+        $membresia = null;
+        $user = Auth::user();
+        if ($user->rol === 'Cliente') {
+            $membresia = Membresia::where('id_usuario', $user->id)->first();
+        }
+
+        return view('reservaciones.index', compact('clases', 'membresia'));
     }
 
     /**
@@ -66,6 +74,7 @@ class ReservacionController extends Controller
         ]);
 
         $clase = Clase::findOrFail($validated['id_clase']);
+        $user = Auth::user();
         
         // Verificar que la clase no sea en el pasado
         if ($clase->fecha < now()->toDateString()) {
@@ -84,6 +93,22 @@ class ReservacionController extends Controller
 
         if ($reservacionExistente) {
             return redirect()->back()->with('error', 'Ya tienes una reservación para esta clase.');
+        }
+
+        // Solo verificar membresía para clientes
+        if ($user->rol === 'Cliente') {
+            // Verificar que el usuario tenga una membresía activa con clases disponibles
+            $membresia = Membresia::where('id_usuario', $user->id)->first();
+            
+            if (!$membresia) {
+                return redirect()->route('membresias.list')
+                    ->with('error', 'Necesitas adquirir una membresía para poder reservar clases.');
+            }
+
+            if ($membresia->clases_disponibles <= 0) {
+                return redirect()->route('membresias.list')
+                    ->with('error', 'No tienes clases disponibles en tu membresía. Adquiere una nueva membresía o renueva la existente.');
+            }
         }
 
         // Redirigir al proceso de pago
@@ -111,6 +136,16 @@ class ReservacionController extends Controller
         DB::transaction(function () use ($reservacion) {
             $reservacion->clase->increment('lugares_disponibles');
             $reservacion->clase->decrement('lugares_ocupados');
+            
+            // Si el usuario es cliente, devolver la clase a su membresía
+            if ($reservacion->usuario->rol === 'Cliente') {
+                $membresia = Membresia::where('id_usuario', $reservacion->id_usuario)->first();
+                if ($membresia) {
+                    $membresia->increment('clases_disponibles');
+                    $membresia->decrement('clases_ocupadas');
+                }
+            }
+            
             $reservacion->delete();
         });
 

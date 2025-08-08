@@ -27,6 +27,12 @@ Route::get('/membresias', [MembresiaController::class, 'index'])
 Route::get('/membresias/lista', [MembresiaController::class, 'list'])
     ->name('membresias.list')
     ->middleware(['auth', 'inactivity', 'rol:Administrador,Cliente']);
+Route::get('/membresias/comprar', [MembresiaController::class, 'comprar'])
+    ->name('membresias.comprar')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+Route::post('/membresias/procesar-compra', [MembresiaController::class, 'procesarCompra'])
+    ->name('membresias.procesar-compra')
+    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
 Route::post('/membresias/store', [MembresiaController::class, 'store'])
     ->name('membresias.store')
     ->middleware(['auth', 'inactivity', 'rol:Administrador']);
@@ -101,7 +107,7 @@ Route::get('/reservaciones/mis-reservaciones', [ReservacionController::class, 'm
     ->middleware(['auth', 'inactivity', 'rol:Cliente']);
 Route::post('/reservaciones/store', [ReservacionController::class, 'store'])
     ->name('reservaciones.store')
-    ->middleware(['auth', 'inactivity', 'rol:Cliente']);
+    ->middleware(['auth', 'inactivity', 'rol:Cliente', 'verificar.membresia']);
 Route::delete('/reservaciones/{id}', [ReservacionController::class, 'cancelar'])
     ->name('reservaciones.cancelar')
     ->middleware(['auth', 'inactivity', 'rol:Cliente']);

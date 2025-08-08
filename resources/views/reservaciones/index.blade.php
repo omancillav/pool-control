@@ -4,6 +4,28 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/panel.css') }}">
+<style>
+.badge-lg {
+  font-size: 1.1em;
+  padding: 0.5em 0.8em;
+}
+
+.alert h5, .alert h6 {
+  margin-bottom: 1rem;
+}
+
+.alert .row {
+  align-items: center;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+}
+</style>
 @endsection
 
 @section('content')
@@ -42,6 +64,35 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  @endif
+
+  @if(Auth::user()->rol === 'Cliente')
+    @if(!$membresia)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <h5><i class="fas fa-exclamation-triangle"></i> Membresía Requerida</h5>
+      <p class="mb-3">Para poder reservar clases, primero necesitas adquirir una membresía. Nuestros paquetes incluyen múltiples clases a precios accesibles.</p>
+      <a href="{{ route('membresias.comprar') }}" class="btn btn-primary">
+        <i class="fas fa-shopping-cart"></i> Comprar Membresía
+      </a>
+    </div>
+    @elseif($membresia->clases_disponibles <= 0)
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <h5><i class="fas fa-clock"></i> Sin Clases Disponibles</h5>
+      <p class="mb-3">Has utilizado todas las clases de tu membresía actual. Adquiere un nuevo paquete para continuar reservando clases.</p>
+      <div class="row">
+        <div class="col-auto">
+          <a href="{{ route('membresias.comprar') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Renovar Membresía
+          </a>
+        </div>
+        <div class="col-auto">
+          <small class="text-muted">
+            Clases utilizadas: {{ $membresia->clases_ocupadas }}/{{ $membresia->clases_adquiridas }}
+          </small>
+        </div>
+      </div>
+    </div>
+    @endif
   @endif
 
   <div class="row">
@@ -86,13 +137,29 @@
           <td>{{ $clase->lugares }}</td>
           <td>
             @if($clase->lugares_disponibles > 0)
-            <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
-              @csrf
-              <input type="hidden" name="id_clase" value="{{ $clase->id }}">
-              <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-credit-card"></i> Reservar
-              </button>
-            </form>
+              @if(Auth::user()->rol === 'Cliente')
+                @if($membresia && $membresia->clases_disponibles > 0)
+                <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
+                  @csrf
+                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-credit-card"></i> Reservar
+                  </button>
+                </form>
+                @else
+                <button class="btn btn-secondary btn-sm" disabled title="Necesitas una membresía activa">
+                  <i class="fas fa-lock"></i> Reservar
+                </button>
+                @endif
+              @else
+                <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
+                  @csrf
+                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-credit-card"></i> Reservar
+                  </button>
+                </form>
+              @endif
             @else
             <span class="text-muted">Sin lugares</span>
             @endif

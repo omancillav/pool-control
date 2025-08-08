@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pago;
 use App\Models\Clase;
 use App\Models\Reservacion;
+use App\Models\Membresia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -107,6 +108,16 @@ class PagoController extends Controller
             // Actualizar lugares disponibles
             $clase->decrement('lugares_disponibles');
             $clase->increment('lugares_ocupados');
+            
+            // Si es un cliente, descontar de su membresía
+            $user = Auth::user();
+            if ($user->rol === 'Cliente') {
+                $membresia = Membresia::where('id_usuario', $user->id)->first();
+                if ($membresia) {
+                    $membresia->decrement('clases_disponibles');
+                    $membresia->increment('clases_ocupadas');
+                }
+            }
         });
 
         // Mensajes más realistas

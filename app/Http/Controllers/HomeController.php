@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Membresia;
 use App\Models\Clase;
+use App\Models\Reservacion;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -37,11 +38,23 @@ class HomeController extends Controller
                 break;
 
             case 'Cliente':
-                $user->load(['membresia', 'clases' => function ($query) {
-                    $query->orderBy('fecha', 'asc');
-                }]);
-                $viewData['membresia'] = $user->membresia;
-                $viewData['clases'] = $user->clases;
+                $membresia = Membresia::where('id_usuario', $user->id)->first();
+                $reservaciones = Reservacion::with(['clase.profesor'])
+                    ->where('id_usuario', $user->id)
+                    ->whereHas('clase', function ($query) {
+                        $query->where('fecha', '>=', now()->toDateString());
+                    })
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
+                
+                $proximasClases = $reservaciones->map(function ($reservacion) {
+                    return $reservacion->clase;
+                })->sortBy('fecha');
+                
+                $viewData['membresia'] = $membresia;
+                $viewData['reservaciones'] = $reservaciones;
+                $viewData['clases'] = $proximasClases;
                 break;
 
             case 'Profesor':
