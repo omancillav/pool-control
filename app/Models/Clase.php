@@ -17,6 +17,7 @@ class Clase extends Model
         'lugares',
         'lugares_ocupados',
         'lugares_disponibles',
+        'precio',
     ];
       public function getActivitylogOptions(): LogOptions
     {
@@ -57,5 +58,31 @@ class Clase extends Model
     public function asistencias()
     {
         return $this->hasMany(Asistencia::class, 'id_clase');
+    }
+
+    /**
+     * Los pagos de esta clase a través de las reservaciones.
+     */
+    public function pagos()
+    {
+        return $this->hasManyThrough(Pago::class, Reservacion::class, 'id_clase', 'id_reservacion');
+    }
+
+    /**
+     * Asignar precio automáticamente basado en el nivel
+     */
+    public function asignarPrecioPorNivel()
+    {
+        $precios = Pago::getPreciosPorNivel();
+        $this->precio = $precios[$this->nivel] ?? 250.00; // Precio por defecto si el nivel no existe
+        return $this;
+    }
+
+    /**
+     * Obtener el precio formateado
+     */
+    public function getPrecioFormateadoAttribute()
+    {
+        return '$' . number_format($this->precio, 2) . ' MXN';
     }
 }

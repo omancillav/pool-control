@@ -402,6 +402,18 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Pagos',
+            'icon' => 'fas fa-fw fa-credit-card',
+            'submenu' => [
+                [
+                    'text' => 'Gestión de Pagos',
+                    'route' => 'pagos.index',
+                    'icon' => 'fas fa-money-bill-wave',
+                    'can' => ['admin']
+                ],
+            ],
+        ],
     ],
 
 

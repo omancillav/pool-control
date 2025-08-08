@@ -40,7 +40,7 @@ class ReservacionController extends Controller
     {
         $search = $request->input('search');
 
-        $reservaciones = Reservacion::with(['clase.profesor'])
+        $reservaciones = Reservacion::with(['clase.profesor', 'pago'])
             ->where('id_usuario', Auth::id())
             ->when($search, function ($query, $search) {
                 return $query->whereHas('clase', function ($q) use ($search) {
@@ -57,13 +57,12 @@ class ReservacionController extends Controller
     }
 
     /**
-     * Crear una nueva reservación
+     * Redirigir al proceso de pago para crear una reservación
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'id_clase' => 'required|exists:clases,id',
-            'notas' => 'nullable|string|max:500'
         ]);
 
         $clase = Clase::findOrFail($validated['id_clase']);
@@ -87,22 +86,8 @@ class ReservacionController extends Controller
             return redirect()->back()->with('error', 'Ya tienes una reservación para esta clase.');
         }
 
-        // Crear la reservación
-        DB::transaction(function () use ($validated) {
-            Reservacion::create([
-                'id_clase' => $validated['id_clase'],
-                'id_usuario' => Auth::id(),
-                'notas' => $validated['notas']
-            ]);
-
-            // Actualizar lugares disponibles
-            $clase = Clase::findOrFail($validated['id_clase']);
-            $clase->decrement('lugares_disponibles');
-            $clase->increment('lugares_ocupados');
-        });
-
-        return redirect()->route('reservaciones.mis-reservaciones')
-            ->with('success', 'Reservación creada exitosamente.');
+        // Redirigir al proceso de pago
+        return redirect()->route('pagos.mostrar', $validated['id_clase']);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Clase;
 use App\Models\User;
+use App\Models\Pago;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
 
@@ -27,21 +28,30 @@ class ClaseFactory extends Factory
         $lugares = fake()->numberBetween(10, 30);
         $lugaresOcupados = fake()->numberBetween(0, $lugares);
         $lugaresDisponibles = $lugares - $lugaresOcupados;
+        
+        $nivel = fake()->randomElement([
+            'Principiante',
+            'Intermedio', 
+            'Avanzado',
+            'Competencia',
+            'Aqua Aeróbicos',
+            'Nado Sincronizado',
+            'Rehabilitación',
+            'Infantil'
+        ]);
+        
+        // Obtener precio basado en el nivel
+        $precios = Pago::getPreciosPorNivel();
+        $precio = $precios[$nivel] ?? 250.00;
 
         return [
             'fecha' => fake()->dateTimeBetween('now', '+2 weeks'),
             'id_profesor' => User::factory(['rol' => 'Profesor']),
-            'nivel' => fake()->randomElement([
-                'Principiante',
-                'Intermedio',
-                'Avanzado',
-                'Competencia',
-                'Terapéutico',
-                'Infantil'
-            ]),
+            'nivel' => $nivel,
             'lugares' => $lugares,
             'lugares_ocupados' => $lugaresOcupados,
             'lugares_disponibles' => $lugaresDisponibles,
+            'precio' => $precio,
         ];
     }
 

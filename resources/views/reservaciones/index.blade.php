@@ -65,6 +65,7 @@
           <th>Fecha</th>
           <th>Nivel</th>
           <th>Profesor</th>
+          <th>Precio</th>
           <th>Lugares Disponibles</th>
           <th>Total Lugares</th>
           <th>Acciones</th>
@@ -76,6 +77,7 @@
           <td>{{ \Carbon\Carbon::parse($clase->fecha)->format('d/m/Y') }}</td>
           <td>{{ $clase->nivel }}</td>
           <td>{{ $clase->profesor->name }}</td>
+          <td><strong>${{ number_format($clase->precio, 2) }}</strong></td>
           <td>
             <span class="badge badge-{{ $clase->lugares_disponibles > 0 ? 'success' : 'danger' }}">
               {{ $clase->lugares_disponibles }}
@@ -84,68 +86,20 @@
           <td>{{ $clase->lugares }}</td>
           <td>
             @if($clase->lugares_disponibles > 0)
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-              data-target="#reservarModal{{ $clase->id }}">
-              <i class="fas fa-calendar-plus"></i> Reservar
-            </button>
+            <form method="POST" action="{{ route('reservaciones.store') }}" style="display: inline;">
+              @csrf
+              <input type="hidden" name="id_clase" value="{{ $clase->id }}">
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-credit-card"></i> Reservar
+              </button>
+            </form>
             @else
             <span class="text-muted">Sin lugares</span>
             @endif
           </td>
-        </tr>
-
-        <!-- Modal para reservar -->
-        <div class="modal fade" id="reservarModal{{ $clase->id }}" tabindex="-1" role="dialog"
-          aria-labelledby="reservarModalLabel{{ $clase->id }}" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="reservarModalLabel{{ $clase->id }}">
-                  Reservar Clase - {{ $clase->nivel }}
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form action="{{ route('reservaciones.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                  <input type="hidden" name="id_clase" value="{{ $clase->id }}">
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($clase->fecha)->format('d/m/Y') }}
-                    </div>
-                    <div class="col-md-6">
-                      <strong>Profesor:</strong> {{ $clase->profesor->name }}
-                    </div>
-                  </div>
-                  <div class="row mt-2">
-                    <div class="col-md-6">
-                      <strong>Nivel:</strong> {{ $clase->nivel }}
-                    </div>
-                    <div class="col-md-6">
-                      <strong>Lugares disponibles:</strong> {{ $clase->lugares_disponibles }}
-                    </div>
-                  </div>
-
-                  <div class="form-group mt-3">
-                    <label for="notas{{ $clase->id }}">Notas adicionales (opcional)</label>
-                    <textarea class="form-control" id="notas{{ $clase->id }}" name="notas"
-                      rows="3" placeholder="Escribe cualquier nota adicional para tu reservación..."></textarea>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-primary">Confirmar Reservación</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
         @empty
         <tr>
-          <td colspan="6" class="text-center">No hay clases disponibles para reservar en este momento.</td>
+          <td colspan="7" class="text-center">No hay clases disponibles para reservar en este momento.</td>
         </tr>
         @endforelse
       </tbody>
