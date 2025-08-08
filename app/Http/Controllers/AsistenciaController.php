@@ -7,6 +7,7 @@ use App\Models\Asistencia;
 use App\Models\Clase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 
 class AsistenciaController extends Controller
 {
@@ -72,8 +73,12 @@ class AsistenciaController extends Controller
         $clase = Clase::findOrFail($claseId);
         $asistencias = $request->input('asistencias', []);
         
+        $asistenciasCreadas = 0;
+        $asistenciasActualizadas = 0;
+        $usuariosPresentes = 0;
+        
         foreach ($asistencias as $usuarioId => $data) {
-            Asistencia::updateOrCreate(
+            $asistencia = Asistencia::updateOrCreate(
                 [
                     'id_clase' => $claseId,
                     'id_usuario' => $usuarioId,
@@ -84,7 +89,31 @@ class AsistenciaController extends Controller
                     'fecha_marcado' => now(),
                 ]
             );
+            
+            if ($asistencia->wasRecentlyCreated) {
+                $asistenciasCreadas++;
+            } else {
+                $asistenciasActualizadas++;
+            }
+            
+            if (isset($data['presente'])) {
+                $usuariosPresentes++;
+            }
         }
+        
+        // Log para el guardado masivo de asistencias
+        activity('Asistencia')
+            ->causedBy(Auth::user())
+            ->withProperties([
+                'clase_id' => $claseId,
+                'clase_nivel' => $clase->nivel,
+                'fecha_clase' => $clase->fecha,
+                'asistencias_creadas' => $asistenciasCreadas,
+                'asistencias_actualizadas' => $asistenciasActualizadas,
+                'usuarios_presentes' => $usuariosPresentes,
+                'total_usuarios_evaluados' => count($asistencias)
+            ])
+            ->log('Asistencias guardadas para clase de ' . $clase->nivel . ' del ' . $clase->fecha->format('d/m/Y'));
         
         return redirect()->route('asistencias.gestion')
             ->with('success', 'Asistencias guardadas correctamente para la clase de ' . $clase->nivel . ' del ' . $clase->fecha->format('d/m/Y'));

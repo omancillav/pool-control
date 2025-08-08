@@ -9,6 +9,7 @@ use App\Models\Membresia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class PagoController extends Controller
 {
@@ -122,9 +123,33 @@ class PagoController extends Controller
 
         // Mensajes más realistas
         if ($request->metodo_pago === 'online') {
+            // Log para pago online exitoso
+            activity('Pago')
+                ->causedBy(Auth::user())
+                ->withProperties([
+                    'metodo_pago' => 'online',
+                    'clase_id' => $clase->id,
+                    'clase_nivel' => $clase->nivel,
+                    'fecha_clase' => $clase->fecha,
+                    'monto' => $clase->precio
+                ])
+                ->log('Pago online procesado exitosamente para clase de ' . $clase->nivel);
+
             return redirect()->route('reservaciones.mis-reservaciones')
                 ->with('success', '¡Pago procesado exitosamente! Tu reservación ha sido confirmada. Recibirás un email de confirmación en unos minutos.');
         } else {
+            // Log para reserva con pago físico
+            activity('Reservacion')
+                ->causedBy(Auth::user())
+                ->withProperties([
+                    'metodo_pago' => 'fisico',
+                    'clase_id' => $clase->id,
+                    'clase_nivel' => $clase->nivel,
+                    'fecha_clase' => $clase->fecha,
+                    'estado' => 'pendiente_pago'
+                ])
+                ->log('Reservación creada con pago físico pendiente para clase de ' . $clase->nivel);
+
             return redirect()->route('reservaciones.mis-reservaciones')
                 ->with('success', 'Reservación creada exitosamente. Tu lugar está asegurado. Recuerda realizar el pago el día de la clase.');
         }
@@ -200,6 +225,19 @@ class PagoController extends Controller
             'numero_transaccion' => Pago::generarNumeroTransaccion()
         ]);
 
+        // Log para marcado de pago como completado
+        activity('Pago')
+            ->causedBy(Auth::user())
+            ->performedOn($pago)
+            ->withProperties([
+                'pago_id' => $pago->id,
+                'estado_anterior' => 'pendiente',
+                'estado_nuevo' => 'completado',
+                'metodo_pago' => $pago->metodo_pago,
+                'monto' => $pago->monto
+            ])
+            ->log('Pago físico marcado como completado');
+
         return redirect()->back()
             ->with('success', 'Pago marcado como completado exitosamente.');
     }
@@ -225,6 +263,20 @@ class PagoController extends Controller
             $pago->update(['estado' => 'cancelado']);
             $pago->reservacion->delete();
         });
+
+        // Log para cancelación de pago
+        activity('Pago')
+            ->causedBy(Auth::user())
+            ->performedOn($pago)
+            ->withProperties([
+                'pago_id' => $pago->id,
+                'estado_anterior' => $pago->getOriginal('estado'),
+                'clase_id' => $pago->reservacion->clase->id,
+                'clase_nivel' => $pago->reservacion->clase->nivel,
+                'monto' => $pago->monto,
+                'razon' => 'Cancelación administrativa'
+            ])
+            ->log('Pago y reservación cancelados por administrador');
 
         return redirect()->back()
             ->with('success', 'Pago y reservación cancelados exitosamente.');

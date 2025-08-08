@@ -167,15 +167,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="alert alert-info mt-3">
-                                    <i class="fas fa-info-circle"></i> 
-                                    <strong>Nota Académica:</strong> Este es un sistema de pago simulado para fines educativos. 
-                                    Los datos de tarjeta son de prueba y no se procesará ninguna transacción real.
-                                    <br><small class="mt-2 d-block">
-                                        <strong>Datos de prueba válidos:</strong> Número: 4532 1234 5678 9012, Exp: 12/26, CVV: 123
-                                    </small>
-                                </div>
                             </div>
                         </div>
 

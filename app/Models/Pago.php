@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Pago extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'id_usuario',
@@ -19,6 +21,19 @@ class Pago extends Model
         'numero_transaccion',
         'notas'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->useLogName('Pago')
+            ->setDescriptionForEvent(fn(string $eventName) => "Se ha " . match ($eventName) {
+                'created' => 'registrado',
+                'updated' => 'actualizado',
+                'deleted' => 'eliminado',
+                default => $eventName
+            } . " un pago");
+    }
 
     /**
      * Relación con el modelo User

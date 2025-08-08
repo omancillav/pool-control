@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Asistencia extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $table = 'asistencias';
 
@@ -24,6 +26,19 @@ class Asistencia extends Model
         'presente' => 'boolean',
         'fecha_marcado' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->useLogName('Asistencia')
+            ->setDescriptionForEvent(fn(string $eventName) => "Se ha " . match ($eventName) {
+                'created' => 'registrado',
+                'updated' => 'actualizado',
+                'deleted' => 'eliminado',
+                default => $eventName
+            } . " una asistencia");
+    }
 
     /**
      * Get the clase that owns the Asistencia

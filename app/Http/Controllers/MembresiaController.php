@@ -7,6 +7,7 @@ use App\Models\Membresia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Models\Activity;
 
 class MembresiaController extends Controller
 {
@@ -166,7 +167,8 @@ class MembresiaController extends Controller
         }
 
         // Usar transacción de base de datos para seguridad
-        DB::transaction(function () use ($user, $paqueteSeleccionado, $validated) {
+        $logData = [];
+        DB::transaction(function () use ($user, $paqueteSeleccionado, $validated, &$logData) {
             // Verificar si el usuario ya tiene una membresía
             $membresiaExistente = Membresia::where('id_usuario', $user->id)->first();
 
@@ -177,6 +179,7 @@ class MembresiaController extends Controller
                     'clases_disponibles' => $membresiaExistente->clases_disponibles + $paqueteSeleccionado['clases']
                 ]);
                 $membresia = $membresiaExistente;
+                $logData['es_renovacion'] = true;
             } else {
                 // Crear nueva membresía
                 $membresia = Membresia::create([
@@ -185,6 +188,7 @@ class MembresiaController extends Controller
                     'clases_disponibles' => $paqueteSeleccionado['clases'],
                     'clases_ocupadas' => 0
                 ]);
+                $logData['es_renovacion'] = false;
             }
 
             // Crear el registro de pago
@@ -203,7 +207,25 @@ class MembresiaController extends Controller
                 'numero_transaccion' => $numeroTransaccion,
                 'notas' => $validated['notas']
             ]);
+            
+            // Preparar datos para el log
+            $logData['estado_pago'] = $estadoPago;
+            $logData['numero_transaccion'] = $numeroTransaccion;
         });
+
+        // Log para compra de membresía
+        activity('Membresia')
+            ->causedBy($user)
+            ->withProperties([
+                'paquete' => $validated['paquete'],
+                'clases_compradas' => $paqueteSeleccionado['clases'],
+                'monto' => $paqueteSeleccionado['precio'],
+                'metodo_pago' => $validated['metodo_pago'],
+                'estado_pago' => $logData['estado_pago'],
+                'es_renovacion' => $logData['es_renovacion'],
+                'numero_transaccion' => $logData['numero_transaccion']
+            ])
+            ->log('Membresía ' . $paqueteSeleccionado['nombre'] . ' ' . ($logData['es_renovacion'] ? 'renovada' : 'adquirida'));
 
         // Mensajes más realistas
         if ($validated['metodo_pago'] === 'online') {
